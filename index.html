@@ -1,1241 +1,877 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Undangan Pernikahan - Arya & Sekar</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-<style>
-/* ============================================================
-   RESET & BASE
-   ============================================================ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Lato', sans-serif; background: #1a0e08; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>DLS Virtual Assistant – Premium Live Chat</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ─── RESET & GLOBAL ─── */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* ============================================================
-   INTRO SCREEN
-   ============================================================ */
-#intro-screen {
-  position: fixed; inset: 0; z-index: 100;
-  background: radial-gradient(ellipse at center, #3d1f10 0%, #1a0e08 100%);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; padding: 20px;
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-#intro-screen.fade-out { opacity: 0; pointer-events: none; transform: scale(1.04); }
+    :root {
+      --primary-deep: #0B2B4F;
+      --primary-ocean: #1A5F9E;
+      --primary-sky: #2D87E3;
+      --primary-glow: rgba(45, 135, 227, 0.25);
+      --gray-bg: #F8FAFE;
+      --card-white: #FFFFFF;
+      --border-light: #E9EFF5;
+      --text-dark: #1F2A44;
+      --text-muted: #5B6E8C;
+      --accent-green: #2FCB7A;
+      --shadow-xl: 0 20px 35px -10px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.02);
+      --radius-card: 28px;
+      --radius-bubble: 22px;
+      --transition-smooth: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
 
-.intro-deco { font-size: 2rem; color: #C9A96E; letter-spacing: 0.3em; margin-bottom: 12px; }
-.intro-subtitle { font-family: 'Lato', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; color: #C9A96E; text-transform: uppercase; margin-bottom: 30px; opacity: 0.8; }
-.intro-names {
-  font-family: 'Cormorant Garant', serif;
-  font-size: clamp(2.8rem, 8vw, 5rem);
-  font-weight: 300; color: #FFFAF0;
-  line-height: 1.1; margin-bottom: 6px;
-}
-.intro-names span { color: #C9A96E; font-style: italic; }
-.intro-ampersand { font-size: clamp(3rem, 9vw, 6rem); color: #F2C4CE; font-style: italic; line-height: 1; }
-.intro-date { color: #E8D5B0; font-size: 0.9rem; letter-spacing: 0.2em; margin: 24px 0 36px; text-transform: uppercase; }
-.intro-divider { width: 120px; height: 1px; background: linear-gradient(90deg, transparent, #C9A96E, transparent); margin: 0 auto 32px; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+      background: radial-gradient(circle at 10% 20%, #EDF2FC, #E2E9F4);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
 
-.start-btn {
-  background: linear-gradient(135deg, #C9A96E, #a8823c);
-  color: #1a0e08; border: none; cursor: pointer;
-  padding: 14px 40px; font-family: 'Lato', sans-serif;
-  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.2em;
-  text-transform: uppercase; border-radius: 2px;
-  box-shadow: 0 4px 20px rgba(201,169,110,0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
-  animation: pulse-btn 2s ease-in-out infinite;
-}
-.start-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,169,110,0.5); }
-@keyframes pulse-btn {
-  0%,100% { box-shadow: 0 4px 20px rgba(201,169,110,0.4); }
-  50% { box-shadow: 0 6px 30px rgba(201,169,110,0.7); }
-}
+    /* ─── MOCKUP LANDING PAGE – PREMIUM TOUCH ─── */
+    .mock-hero {
+      max-width: 720px;
+      width: 100%;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(2px);
+      border-radius: 48px;
+      padding: 48px 32px;
+      text-align: center;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid rgba(255,255,255,0.7);
+      transition: transform 0.2s ease;
+    }
 
-/* ============================================================
-   GAME CONTAINER
-   ============================================================ */
-#game-wrapper {
-  position: fixed; inset: 0; overflow: hidden;
-  opacity: 0; transition: opacity 0.8s ease;
-}
-#game-wrapper.visible { opacity: 1; }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(11, 43, 79, 0.06);
+      padding: 8px 20px;
+      border-radius: 80px;
+      margin-bottom: 32px;
+      backdrop-filter: blur(2px);
+    }
 
-#game-canvas { display: block; image-rendering: pixelated; cursor: default; }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #0B2B4F, #1A5F9E);
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 22px;
+      box-shadow: 0 8px 18px rgba(26,95,158,0.25);
+    }
 
-/* ============================================================
-   HUD
-   ============================================================ */
-#hud {
-  position: fixed; top: 0; left: 0; right: 0;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 20px;
-  background: linear-gradient(180deg, rgba(26,14,8,0.85) 0%, transparent 100%);
-  pointer-events: none; z-index: 10;
-}
-.hud-title { font-family: 'Cormorant Garant', serif; color: #C9A96E; font-size: 1rem; font-weight: 600; letter-spacing: 0.1em; }
-.hud-title small { display: block; font-size: 0.65rem; color: #E8D5B0; letter-spacing: 0.15em; text-transform: uppercase; font-family: 'Lato', sans-serif; font-weight: 300; }
-#progress-display {
-  font-family: 'Lato', sans-serif; font-size: 0.75rem;
-  color: #E8D5B0; letter-spacing: 0.1em;
-  background: rgba(26,14,8,0.6); padding: 6px 14px;
-  border: 1px solid rgba(201,169,110,0.3); border-radius: 20px;
-}
-#progress-display span { color: #C9A96E; font-weight: 700; }
+    .brand-name {
+      font-weight: 800;
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #0B2B4F, #1A5F9E);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
 
-/* Countdown */
-#countdown-hud {
-  position: fixed; top: 60px; left: 50%; transform: translateX(-50%);
-  text-align: center; pointer-events: none; z-index: 10;
-  background: rgba(26,14,8,0.6); padding: 6px 20px;
-  border: 1px solid rgba(201,169,110,0.2); border-radius: 20px;
-}
-#countdown-hud .cd-label { font-size: 0.6rem; color: #E8D5B0; letter-spacing: 0.2em; text-transform: uppercase; }
-#countdown-hud .cd-time { font-family: 'Cormorant Garant', serif; color: #F2C4CE; font-size: 1rem; font-weight: 600; letter-spacing: 0.1em; }
+    h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 800;
+      line-height: 1.2;
+      color: #0B2B4F;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
 
-/* Music toggle */
-#music-btn {
-  position: fixed; top: 12px; right: 16px;
-  background: rgba(26,14,8,0.7); border: 1px solid rgba(201,169,110,0.4);
-  color: #C9A96E; cursor: pointer; width: 36px; height: 36px;
-  border-radius: 50%; font-size: 1rem; display: flex; align-items: center;
-  justify-content: center; z-index: 20; transition: background 0.2s;
-  pointer-events: all;
-}
-#music-btn:hover { background: rgba(201,169,110,0.2); }
+    .hero-desc {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 460px;
+      margin: 0 auto 28px auto;
+      line-height: 1.5;
+    }
 
-/* ============================================================
-   INTERACTION PROMPT
-   ============================================================ */
-#interact-prompt {
-  position: fixed; bottom: 155px; left: 50%; transform: translateX(-50%);
-  background: rgba(26,14,8,0.9); border: 1.5px solid #C9A96E;
-  color: #FFFAF0; padding: 8px 20px; border-radius: 20px;
-  font-size: 0.8rem; letter-spacing: 0.1em;
-  display: none; z-index: 10; pointer-events: none;
-  animation: float-prompt 1.5s ease-in-out infinite;
-  white-space: nowrap;
-}
-@keyframes float-prompt {
-  0%,100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-4px); }
-}
-#interact-prompt kbd {
-  background: #C9A96E; color: #1a0e08; padding: 2px 8px;
-  border-radius: 4px; font-weight: 700; font-size: 0.75rem; margin: 0 4px;
-}
+    .feature-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 28px;
+    }
 
-/* ============================================================
-   MOBILE CONTROLS — redesigned for clarity
-   ============================================================ */
-#mobile-controls {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: grid;
-  grid-template-columns: 60px 60px 60px;
-  grid-template-rows: 60px 60px;
-  gap: 8px;
-  z-index: 10;
-}
+    .pill {
+      background: white;
+      border-radius: 60px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--primary-ocean);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      border: 1px solid var(--border-light);
+      backdrop-filter: blur(4px);
+      transition: var(--transition-smooth);
+    }
 
-.dpad-btn {
-  background: rgba(15, 8, 4, 0.82);
-  border: 2.5px solid rgba(201,169,110,0.85);
-  border-radius: 12px;
-  color: #F5D98B;
-  font-size: 1.6rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  transition: background 0.1s, transform 0.08s, border-color 0.1s;
-  box-shadow:
-    0 4px 12px rgba(0,0,0,0.6),
-    inset 0 1px 0 rgba(255,255,255,0.08),
-    0 0 0 1px rgba(201,169,110,0.15);
-}
+    .pill i {
+      margin-right: 8px;
+      font-size: 13px;
+    }
 
-.dpad-btn:active, .dpad-btn.pressed {
-  background: rgba(201,169,110,0.35);
-  border-color: #C9A96E;
-  transform: scale(0.93);
-  box-shadow:
-    0 2px 6px rgba(0,0,0,0.5),
-    inset 0 2px 4px rgba(0,0,0,0.3);
-}
+    .pill:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary-sky);
+      background: #f0f7ff;
+    }
 
-/* Arrow shapes via CSS for crispness */
-.dpad-btn .arrow-icon {
-  width: 0; height: 0; display: block;
-}
-#btn-up   { grid-column: 2; grid-row: 1; }
-#btn-left { grid-column: 1; grid-row: 2; }
-#btn-down { grid-column: 2; grid-row: 2; }
-#btn-right{ grid-column: 3; grid-row: 2; }
+    /* floating button premium */
+    #chat-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 68px;
+      height: 68px;
+      background: linear-gradient(145deg, #1460B0, #0B2B4F);
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 28px;
+      box-shadow: 0 12px 24px rgba(11, 43, 79, 0.35), 0 0 0 1px rgba(255,255,255,0.2);
+      transition: all 0.2s ease;
+      z-index: 1000;
+    }
 
-/* Center dot */
-.dpad-center {
-  grid-column: 2; grid-row: 2;
-  pointer-events: none;
-  display: flex; align-items: center; justify-content: center;
-}
+    #chat-fab:hover {
+      transform: scale(1.06) translateY(-4px);
+      box-shadow: 0 20px 32px rgba(11, 43, 79, 0.4);
+    }
 
-/* ============================================================
-   INTERACT BUTTON (mobile) — tap to open
-   ============================================================ */
-#interact-btn-mobile {
-  position: fixed;
-  bottom: 24px;
-  right: 20px;
-  background: linear-gradient(135deg, rgba(201,169,110,0.3), rgba(168,130,60,0.4));
-  border: 2.5px solid #C9A96E;
-  color: #F5D98B;
-  border-radius: 50%;
-  width: 64px; height: 64px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  z-index: 10;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  line-height: 1.3;
-  touch-action: manipulation;
-  box-shadow: 0 4px 16px rgba(201,169,110,0.4), 0 0 0 1px rgba(201,169,110,0.2);
-  animation: pulse-btn 1.5s ease-in-out infinite;
-  flex-direction: column;
-  gap: 1px;
-}
-#interact-btn-mobile .ibm-icon { font-size: 1.2rem; display: block; }
-#interact-btn-mobile .ibm-label { font-size: 0.6rem; display: block; }
+    .fab-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 14px;
+      height: 14px;
+      background: #FF5A5F;
+      border-radius: 20px;
+      border: 2px solid white;
+    }
 
-/* ============================================================
-   POPUP / MODAL
-   ============================================================ */
-#popup-overlay {
-  position: fixed; inset: 0; background: rgba(26,14,8,0.75);
-  z-index: 50; display: none; align-items: center; justify-content: center;
-  padding: 20px; backdrop-filter: blur(4px);
-}
-#popup-overlay.active { display: flex; }
+    /* Chat widget premium */
+    #chat-widget {
+      position: fixed;
+      bottom: 110px;
+      right: 28px;
+      width: 400px;
+      max-height: 680px;
+      background: var(--card-white);
+      border-radius: 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.02);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 999;
+      transform: scale(0.92) translateY(30px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.2, 0.95, 0.4, 1.1), opacity 0.25s ease;
+      backdrop-filter: blur(0px);
+    }
 
-#popup-box {
-  background: linear-gradient(160deg, #FFFAF0 0%, #F5ECD8 100%);
-  border: 1px solid #C9A96E; border-radius: 4px;
-  max-width: 520px; width: 100%; max-height: 85vh; overflow-y: auto;
-  position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-  animation: popup-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-@keyframes popup-in {
-  from { transform: scale(0.85) translateY(20px); opacity: 0; }
-  to { transform: scale(1) translateY(0); opacity: 1; }
-}
+    #chat-widget.open {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
 
-.popup-header {
-  background: linear-gradient(135deg, #C9A96E, #a8823c);
-  padding: 18px 24px; position: relative;
-}
-.popup-header h2 {
-  font-family: 'Cormorant Garant', serif; color: #FFFAF0;
-  font-size: 1.5rem; font-weight: 600; margin-bottom: 4px;
-}
-.popup-header p { color: rgba(255,250,240,0.8); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; }
-.popup-close {
-  position: absolute; top: 12px; right: 14px;
-  background: rgba(255,255,255,0.2); border: none; color: #FFFAF0;
-  width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
-  font-size: 1rem; display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s;
-}
-.popup-close:hover { background: rgba(255,255,255,0.4); }
+    /* Header kelas atas */
+    .chat-header {
+      background: linear-gradient(110deg, #0B2B4F 0%, #1A5F9E 100%);
+      padding: 20px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
 
-.popup-body { padding: 24px; }
-.popup-body p { color: #2C1A0E; line-height: 1.7; font-size: 0.9rem; margin-bottom: 12px; }
-.popup-body p:last-child { margin-bottom: 0; }
+    .agent-avatar {
+      width: 52px;
+      height: 52px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(4px);
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
 
-.info-card {
-  background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.3);
-  border-radius: 4px; padding: 14px 16px; margin-bottom: 12px;
-}
-.info-card h3 { font-family: 'Cormorant Garant', serif; color: #C9A96E; font-size: 1.1rem; margin-bottom: 8px; }
-.info-card p { color: #2C1A0E; font-size: 0.85rem; line-height: 1.6; margin-bottom: 6px; }
-.info-card p:last-child { margin-bottom: 0; }
-.info-card .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: #a8823c; font-weight: 700; }
+    .agent-avatar::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 12px;
+      height: 12px;
+      background: #2FCB7A;
+      border-radius: 20px;
+      border: 2px solid #1A5F9E;
+    }
 
-.maps-btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: linear-gradient(135deg, #C9A96E, #a8823c); color: #1a0e08;
-  border: none; padding: 8px 18px; border-radius: 2px; cursor: pointer;
-  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; text-decoration: none; margin-top: 10px;
-  transition: transform 0.2s; font-family: 'Lato', sans-serif;
-}
-.maps-btn:hover { transform: translateY(-1px); }
+    .agent-info {
+      flex: 1;
+    }
 
-/* Gallery */
-.gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
-.gallery-placeholder {
-  aspect-ratio: 1; border-radius: 4px; overflow: hidden;
-  border: 1px solid rgba(201,169,110,0.3); position: relative;
-  display: flex; flex-direction: column; align-items: center;
-  justify-content: center; gap: 6px;
-  background: linear-gradient(135deg, #f8f0e4, #ede0c8);
-}
-.gallery-placeholder .emoji { font-size: 2.5rem; }
-.gallery-placeholder .caption { font-size: 0.7rem; color: #a8823c; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; }
+    .agent-name {
+      font-weight: 700;
+      font-size: 18px;
+      color: white;
+      letter-spacing: -0.2px;
+    }
 
-/* RSVP form */
-.rsvp-form { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
-.rsvp-form input, .rsvp-form select, .rsvp-form textarea {
-  width: 100%; padding: 10px 14px;
-  border: 1px solid rgba(201,169,110,0.4); border-radius: 2px;
-  background: rgba(255,250,240,0.8); color: #2C1A0E;
-  font-family: 'Lato', sans-serif; font-size: 0.85rem;
-  transition: border-color 0.2s;
-}
-.rsvp-form input:focus, .rsvp-form select:focus, .rsvp-form textarea:focus {
-  outline: none; border-color: #C9A96E;
-}
-.rsvp-form textarea { resize: vertical; min-height: 80px; }
-.rsvp-submit {
-  background: linear-gradient(135deg, #C9A96E, #a8823c); color: #1a0e08;
-  border: none; padding: 12px; font-family: 'Lato', sans-serif;
-  font-weight: 700; font-size: 0.85rem; letter-spacing: 0.15em;
-  text-transform: uppercase; cursor: pointer; border-radius: 2px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.rsvp-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,169,110,0.4); }
-.rsvp-success { display: none; text-align: center; padding: 20px; }
-.rsvp-success .big-emoji { font-size: 3rem; }
-.rsvp-success p { color: #2C1A0E; margin-top: 8px; font-family: 'Cormorant Garant', serif; font-size: 1.1rem; font-style: italic; }
+    .agent-status {
+      font-size: 13px;
+      color: #B9DFFF;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+    }
 
-/* Wishes list */
-.wishes-list { margin-top: 16px; max-height: 160px; overflow-y: auto; }
-.wish-item { padding: 10px; border-bottom: 1px solid rgba(201,169,110,0.2); }
-.wish-item .wname { font-weight: 700; font-size: 0.8rem; color: #C9A96E; }
-.wish-item .wmsg { font-size: 0.82rem; color: #2C1A0E; margin-top: 2px; font-style: italic; }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #2FCB7A;
+      border-radius: 10px;
+      display: inline-block;
+      box-shadow: 0 0 0 2px rgba(47,203,122,0.3);
+    }
 
-/* ============================================================
-   CONFETTI & CELEBRATION
-   ============================================================ */
-#confetti-canvas {
-  position: fixed; inset: 0; pointer-events: none; z-index: 60;
-  display: none;
-}
-#celebration-msg {
-  position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  background: linear-gradient(160deg, #FFFAF0, #F5ECD8);
-  border: 2px solid #C9A96E; border-radius: 4px; padding: 32px 40px;
-  text-align: center; z-index: 70; display: none;
-  animation: popup-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  max-width: 400px; width: 90%;
-}
-#celebration-msg .cel-icon { font-size: 3rem; margin-bottom: 12px; }
-#celebration-msg h2 {
-  font-family: 'Cormorant Garant', serif; color: #C9A96E;
-  font-size: 1.6rem; font-weight: 600; margin-bottom: 10px;
-}
-#celebration-msg p { color: #2C1A0E; font-size: 0.9rem; line-height: 1.6; }
-#celebration-msg .close-cel {
-  margin-top: 20px; background: linear-gradient(135deg, #C9A96E, #a8823c);
-  color: #1a0e08; border: none; padding: 10px 28px;
-  cursor: pointer; font-family: 'Lato', sans-serif; font-weight: 700;
-  font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
-  border-radius: 2px;
-}
+    .btn-close {
+      width: 34px;
+      height: 34px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 60px;
+      border: none;
+      color: white;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-/* ============================================================
-   FALLING PETALS
-   ============================================================ */
-.petal {
-  position: fixed; top: -30px; pointer-events: none; z-index: 5;
-  font-size: 1.2rem; opacity: 0.7;
-  animation: petal-fall linear infinite;
-}
-@keyframes petal-fall {
-  0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0.7; }
-  100% { transform: translateY(110vh) rotate(360deg) translateX(30px); opacity: 0; }
-}
+    .btn-close:hover {
+      background: rgba(255,255,255,0.28);
+      transform: scale(1.02);
+    }
 
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width: 600px) {
-  .gallery-grid { grid-template-columns: 1fr 1fr; }
-  #popup-box { border-radius: 0; max-height: 90vh; }
-  .popup-body { padding: 16px; }
-  #mobile-controls {
-    grid-template-columns: 56px 56px 56px;
-    grid-template-rows: 56px 56px;
-  }
-  .dpad-btn { font-size: 1.5rem; }
-}
-</style>
+    /* Chat body premium */
+    .chat-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px;
+      background: #F5F9FF;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .chat-body::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .chat-body::-webkit-scrollbar-track {
+      background: #E2E9F0;
+      border-radius: 10px;
+    }
+
+    .chat-body::-webkit-scrollbar-thumb {
+      background: #BECCDB;
+      border-radius: 10px;
+    }
+
+    /* Bubbles */
+    .msg-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      animation: floatMsg 0.25s ease-out;
+    }
+
+    @keyframes floatMsg {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .msg-row.user {
+      flex-direction: row-reverse;
+    }
+
+    .bubble-avatar {
+      width: 34px;
+      height: 34px;
+      background: #E6EEF8;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      color: #1A5F9E;
+    }
+
+    .msg-row.user .bubble-avatar {
+      background: #1A5F9E;
+      color: white;
+    }
+
+    .bubble-wrap {
+      max-width: 78%;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .msg-row.user .bubble-wrap {
+      align-items: flex-end;
+    }
+
+    .bubble {
+      background: white;
+      padding: 12px 18px;
+      border-radius: 24px;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #1F2A44;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      border-bottom-left-radius: 6px;
+      font-weight: 500;
+    }
+
+    .msg-row.user .bubble {
+      background: linear-gradient(125deg, #1460B0, #0B2B4F);
+      color: white;
+      border-bottom-right-radius: 6px;
+      border-bottom-left-radius: 20px;
+      box-shadow: 0 4px 10px rgba(20,96,176,0.2);
+    }
+
+    .bubble-time {
+      font-size: 10px;
+      color: #8A99B4;
+      margin-left: 8px;
+    }
+
+    /* typing modern */
+    .typing-bubble {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      padding: 10px 16px;
+    }
+
+    .typing-dot {
+      width: 7px;
+      height: 7px;
+      background: #8196b2;
+      border-radius: 20px;
+      animation: blinkTyping 1.3s infinite ease;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes blinkTyping {
+      0%, 60%, 100% {
+        transform: translateY(0px);
+        opacity: 0.5;
+      }
+      30% {
+        transform: translateY(-5px);
+        opacity: 1;
+      }
+    }
+
+    /* Carousel premium */
+    .carousel-wrapper {
+      margin-top: 8px;
+      margin-bottom: 4px;
+      position: relative;
+      padding: 0 6px;
+    }
+
+    .carousel-track-outer {
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 14px;
+      transition: transform 0.35s cubic-bezier(0.2, 0.85, 0.4, 1);
+      padding: 4px 2px 6px;
+    }
+
+    .card {
+      min-width: 154px;
+      background: var(--card-white);
+      border-radius: 24px;
+      padding: 16px 12px;
+      cursor: pointer;
+      flex-shrink: 0;
+      border: 1px solid #EFF3FA;
+      box-shadow: 0 5px 14px rgba(0,0,0,0.02);
+      transition: all 0.2s;
+      backdrop-filter: blur(2px);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary-sky);
+      background: #ffffff;
+      box-shadow: 0 12px 22px -12px rgba(26,95,158,0.2);
+    }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-weight: 800;
+      font-size: 15px;
+      color: #0B2B4F;
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: #6C7F9E;
+      line-height: 1.4;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      background: white;
+      border: 1px solid #DCE3EC;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 12px;
+      color: #1A5F9E;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      transition: 0.2s;
+    }
+
+    .carousel-btn:hover {
+      background: #EAF2FF;
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .carousel-btn.prev {
+      left: -10px;
+    }
+
+    .carousel-btn.next {
+      right: -10px;
+    }
+
+    /* footer input */
+    .chat-footer {
+      padding: 14px 16px;
+      background: white;
+      border-top: 1px solid #EDF2F8;
+      display: none;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .chat-footer.visible {
+      display: flex;
+    }
+
+    .chat-input {
+      flex: 1;
+      border: 1.5px solid #E2E8F2;
+      border-radius: 28px;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-family: inherit;
+      background: #FCFDFF;
+      resize: none;
+      transition: 0.2s;
+      outline: none;
+      font-weight: 450;
+    }
+
+    .chat-input:focus {
+      border-color: var(--primary-sky);
+      box-shadow: 0 0 0 2px rgba(45,135,227,0.2);
+    }
+
+    .btn-send {
+      background: linear-gradient(135deg, #1A5F9E, #0B2B4F);
+      width: 44px;
+      height: 44px;
+      border-radius: 60px;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-send:hover {
+      transform: scale(1.04);
+      box-shadow: 0 4px 12px rgba(26,95,158,0.4);
+    }
+
+    @media (max-width: 500px) {
+      #chat-widget {
+        width: 94vw;
+        right: 3vw;
+        bottom: 90px;
+        max-height: 80vh;
+      }
+      .mock-hero {
+        padding: 32px 18px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ============================================================
-     INTRO SCREEN
-     ============================================================ -->
-<div id="intro-screen">
-  <div class="intro-deco">✦ ✦ ✦</div>
-  <div class="intro-subtitle">Dengan penuh kasih, kami mengundang Anda</div>
-  <div class="intro-names">Arya</div>
-  <div class="intro-ampersand">&amp;</div>
-  <div class="intro-names">Sekar</div>
-  <div class="intro-divider"></div>
-  <div class="intro-date">Sabtu, 12 Juli 2025</div>
-  <button class="start-btn" id="start-btn">✦ Jelajahi Undangan ✦</button>
-  <div style="margin-top:18px; color: rgba(232,213,176,0.5); font-size:0.72rem; letter-spacing:0.1em;">
-    Gunakan tombol panah ← → ↑ ↓ atau tombol di layar
+<div class="mock-hero">
+  <div class="brand">
+    <div class="brand-icon"><i class="fa-regular fa-shield-halved"></i></div>
+    <span class="brand-name">DLS Insurance</span>
+  </div>
+  <h1>Asuransi <span style="color:#1A5F9E;">cerdas</span> & terpersonalisasi</h1>
+  <p class="hero-desc">Pantau polis, lacak referral, dan hubungi agent profesional — semua dalam satu ekosistem modern.</p>
+  <div class="feature-pills">
+    <span class="pill"><i class="fa-regular fa-file-lines"></i> Klaim Cepat</span>
+    <span class="pill"><i class="fa-regular fa-chart-line"></i> Referral Journey</span>
+    <span class="pill"><i class="fa-regular fa-headset"></i> Dukungan 24/7</span>
+  </div>
+  <div class="feature-pills" style="margin-top: 8px;">
+    <span class="pill"><i class="fa-regular fa-circle-check"></i> 100% Terpercaya</span>
   </div>
 </div>
 
-<!-- ============================================================
-     GAME WRAPPER
-     ============================================================ -->
-<div id="game-wrapper">
-  <canvas id="game-canvas"></canvas>
+<button id="chat-fab" aria-label="Buka chat DLS">
+  <i class="fa-regular fa-message"></i>
+  <span class="fab-badge"></span>
+</button>
 
-  <!-- HUD -->
-  <div id="hud">
-    <div class="hud-title">Arya &amp; Sekar <small>Wedding Invitation</small></div>
-    <div id="progress-display">Pos Dikunjungi: <span id="prog-count">0</span>/5</div>
-  </div>
-
-  <!-- Countdown -->
-  <div id="countdown-hud">
-    <div class="cd-label">Menuju Hari Istimewa</div>
-    <div class="cd-time" id="cd-time">-</div>
-  </div>
-
-  <!-- Music button -->
-  <button id="music-btn" title="Toggle Music">🎵</button>
-
-  <!-- Interact prompt -->
-  <div id="interact-prompt">Tekan <kbd>Enter</kbd> atau <kbd>E</kbd> untuk Interaksi</div>
-
-  <!-- Mobile D-Pad -->
-  <div id="mobile-controls">
-    <button class="dpad-btn" id="btn-up"    aria-label="Atas">▲</button>
-    <button class="dpad-btn" id="btn-left"  aria-label="Kiri">◀</button>
-    <button class="dpad-btn" id="btn-down"  aria-label="Bawah">▼</button>
-    <button class="dpad-btn" id="btn-right" aria-label="Kanan">▶</button>
-  </div>
-
-  <!-- Mobile interact button -->
-  <button id="interact-btn-mobile" aria-label="Interaksi">
-    <span class="ibm-icon">✦</span>
-    <span class="ibm-label">BUKA</span>
-  </button>
-</div>
-
-<!-- ============================================================
-     POPUP OVERLAY
-     ============================================================ -->
-<div id="popup-overlay">
-  <div id="popup-box">
-    <div class="popup-header">
-      <button class="popup-close" id="popup-close">✕</button>
-      <h2 id="popup-title">Judul</h2>
-      <p id="popup-subtitle">Sub</p>
+<div id="chat-widget" role="dialog" aria-label="Asisten Virtual DLS">
+  <div class="chat-header">
+    <div class="agent-avatar">🤖</div>
+    <div class="agent-info">
+      <div class="agent-name">DLS Virtual Assistant</div>
+      <div class="agent-status"><span class="status-dot"></span> Aktif & siap membantu</div>
     </div>
-    <div class="popup-body" id="popup-body"></div>
+    <button class="btn-close" id="btn-close"><i class="fa-regular fa-xmark"></i></button>
+  </div>
+
+  <div class="chat-body" id="chat-body"></div>
+
+  <div class="chat-footer" id="chat-footer">
+    <textarea id="chat-input" class="chat-input" rows="1" placeholder="Tulis pesan..."></textarea>
+    <button class="btn-send" id="btn-send"><i class="fa-regular fa-paper-plane-top"></i></button>
   </div>
 </div>
-
-<!-- ============================================================
-     CONFETTI CANVAS
-     ============================================================ -->
-<canvas id="confetti-canvas"></canvas>
-
-<!-- ============================================================
-     CELEBRATION MESSAGE
-     ============================================================ -->
-<div id="celebration-msg">
-  <div class="cel-icon">💐</div>
-  <h2>Terima Kasih!</h2>
-  <p>Terima kasih telah mengunjungi undangan kami ❤️<br>
-  Kami dengan penuh sukacita menantikan kehadiran Anda di hari bahagia kami.</p>
-  <button class="close-cel" id="close-cel">Tutup ✕</button>
-</div>
-
-<audio id="bg-music" loop preload="auto"></audio>
 
 <script>
-/* ============================================================
-   CONSTANTS & CONFIG
-   ============================================================ */
-const TILE = 32;
-const MAP_W = 60;
-const MAP_H = 45;
-const PLAYER_SPEED = 2.5;
-const WEDDING_DATE = new Date('2025-07-12T08:00:00');
+  /* ----------------------------------------------------
+     DLS Virtual Assistant – Professional, sleek + full interactive
+  ---------------------------------------------------- */
+  const dom = {
+    fab: document.getElementById('chat-fab'),
+    widget: document.getElementById('chat-widget'),
+    body: document.getElementById('chat-body'),
+    footer: document.getElementById('chat-footer'),
+    input: document.getElementById('chat-input'),
+    sendBtn: document.getElementById('btn-send'),
+    closeBtn: document.getElementById('btn-close')
+  };
 
-let wishes = JSON.parse(localStorage.getItem('wedding_wishes') || '[]');
+  let state = {
+    isOpen: false,
+    agentMode: false,
+    carouselIndex: 0,
+    cardsCount: 3,
+    welcomedFlag: false,
+  };
 
-const T = { GRASS:0, PATH:1, TREE:2, FLOWER:3, WATER:4, FENCE:5, ROSE:6, ARCH:7 };
+  // Helper time
+  const getTime = () => {
+    const d = new Date();
+    return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+  };
 
-function buildMap() {
-  const m = [];
-  for (let y = 0; y < MAP_H; y++) {
-    m[y] = [];
-    for (let x = 0; x < MAP_W; x++) m[y][x] = T.GRASS;
+  const scrollSmooth = () => {
+    dom.body.scrollTo({ top: dom.body.scrollHeight, behavior: 'smooth' });
+  };
+
+  // Add message core
+  function addMessage(text, sender = 'bot', options = {}) {
+    const row = document.createElement('div');
+    row.className = `msg-row ${sender === 'user' ? 'user' : 'bot'}`;
+    let avatarIcon = sender === 'user' ? '👤' : (state.agentMode ? '👨‍💼' : '🤖');
+    if (sender === 'bot' && state.agentMode) avatarIcon = '👨‍💼';
+    row.innerHTML = `
+      <div class="bubble-avatar">${avatarIcon}</div>
+      <div class="bubble-wrap">
+        <div class="bubble">${text}</div>
+        <span class="bubble-time">${getTime()}</span>
+      </div>
+    `;
+    if (options.carousel) {
+      const wrapDiv = row.querySelector('.bubble-wrap');
+      wrapDiv.appendChild(buildPremiumCarousel());
+    }
+    dom.body.appendChild(row);
+    scrollSmooth();
+    return row;
   }
-  for (let x = 0; x < MAP_W; x++) { m[0][x] = T.FENCE; m[MAP_H-1][x] = T.FENCE; }
-  for (let y = 0; y < MAP_H; y++) { m[y][0] = T.FENCE; m[y][MAP_W-1] = T.FENCE; }
-  for (let x = 1; x < MAP_W-1; x++) { m[22][x] = T.PATH; m[23][x] = T.PATH; }
-  for (let y = 1; y < MAP_H-1; y++) { m[y][28] = T.PATH; m[y][29] = T.PATH; m[y][30] = T.PATH; }
-  for (let x = 5; x < 27; x++) { m[12][x] = T.PATH; m[13][x] = T.PATH; }
-  for (let x = 32; x < MAP_W-2; x++) { m[12][x] = T.PATH; m[13][x] = T.PATH; }
-  for (let y = 14; y < 22; y++) { m[y][10] = T.PATH; m[y][11] = T.PATH; }
-  for (let y = 14; y < 22; y++) { m[y][46] = T.PATH; m[y][47] = T.PATH; }
-  for (let y = 24; y < 33; y++) { m[y][10] = T.PATH; m[y][11] = T.PATH; }
-  for (let y = 24; y < 38; y++) { m[y][46] = T.PATH; m[y][47] = T.PATH; }
-  const trees = [
-    [3,3],[4,3],[3,4],[5,5],[7,3],[8,4],
-    [52,3],[53,3],[54,4],[56,3],[57,4],
-    [3,40],[4,41],[3,42],[5,40],[7,42],
-    [52,40],[53,41],[55,40],[56,41],
-    [15,6],[16,6],[17,7],[14,8],
-    [40,6],[41,6],[42,7],[43,8],
-    [15,35],[16,35],[17,36],
-    [40,35],[41,35],[42,36],
+
+  const showTyping = () => {
+    const existing = document.getElementById('typingRowDLS');
+    if (existing) existing.remove();
+    const row = document.createElement('div');
+    row.className = 'msg-row bot';
+    row.id = 'typingRowDLS';
+    row.innerHTML = `
+      <div class="bubble-avatar">${state.agentMode ? '👨‍💼' : '🤖'}</div>
+      <div class="bubble-wrap">
+        <div class="bubble typing-bubble">
+          <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+        </div>
+      </div>`;
+    dom.body.appendChild(row);
+    scrollSmooth();
+  };
+
+  const removeTyping = () => {
+    const el = document.getElementById('typingRowDLS');
+    if (el) el.remove();
+  };
+
+  const botDelayReply = async (text, delay = 1300) => {
+    showTyping();
+    await new Promise(r => setTimeout(r, delay));
+    removeTyping();
+    addMessage(text, 'bot');
+  };
+
+  /* CARDS data */
+  const cardData = [
+    { icon: '📋', title: 'Informasi Polis', desc: 'Cek detail polis, ADSUP DLS', replyMsg: '📌 Informasi Polis dapat diakses melalui menu **ADSUP DLS**.\nSilakan login ke portal nasabah untuk melihat detail lengkap polis Anda.' },
+    { icon: '📈', title: 'Referral Journey', desc: 'Monitor status referral & prospek', replyMsg: '📊 Menu **Referral Journey** memberikan Anda tracking real-time terhadap prospek nasabah, komisi & status referral. Akses melalui dashboard utama.' },
+    { icon: '🎧', title: 'Live Agent', desc: 'Bantuan prioritas dari CS', replyMsg: null }
   ];
-  trees.forEach(([x,y]) => { if(m[y]&&m[y][x]!==undefined && m[y][x]===T.GRASS) m[y][x]=T.TREE; });
-  for (let x = 1; x < MAP_W-1; x++) {
-    if(m[21][x]===T.GRASS) m[21][x]=T.FLOWER;
-    if(m[24][x]===T.GRASS) m[24][x]=T.FLOWER;
+
+  function buildPremiumCarousel() {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'carousel-wrapper';
+
+    const outer = document.createElement('div');
+    outer.className = 'carousel-track-outer';
+    const track = document.createElement('div');
+    track.className = 'carousel-track';
+    track.id = 'dynamicCarTrack';
+
+    cardData.forEach((item, idx) => {
+      const cardDiv = document.createElement('div');
+      cardDiv.className = 'card';
+      cardDiv.innerHTML = `
+        <div class="card-icon">${item.icon}</div>
+        <div class="card-title">${item.title}</div>
+        <div class="card-desc">${item.desc}</div>
+      `;
+      cardDiv.addEventListener('click', (e) => {
+        e.stopPropagation();
+        handleCarouselClick(idx);
+      });
+      track.appendChild(cardDiv);
+    });
+    outer.appendChild(track);
+    const btnPrev = document.createElement('button');
+    btnPrev.className = 'carousel-btn prev';
+    btnPrev.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+    btnPrev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      slideCarousel(-1);
+    });
+    const btnNext = document.createElement('button');
+    btnNext.className = 'carousel-btn next';
+    btnNext.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+    btnNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      slideCarousel(1);
+    });
+    wrapper.appendChild(btnPrev);
+    wrapper.appendChild(outer);
+    wrapper.appendChild(btnNext);
+    setTimeout(() => updateCarouselWidth(), 50);
+    return wrapper;
   }
-  for (let y = 1; y < MAP_H-1; y++) {
-    if(m[y][27]===T.GRASS) m[y][27]=T.ROSE;
-    if(m[y][31]===T.GRASS) m[y][31]=T.ROSE;
+
+  function updateCarouselWidth() {
+    const track = document.getElementById('dynamicCarTrack');
+    if (!track || track.children.length === 0) return;
+    const cardWidth = track.children[0].offsetWidth + 14;
+    const currentIndex = state.carouselIndex;
+    track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
   }
-  [[6,26],[7,26],[6,27],[7,27],[6,28],[7,28]].forEach(([x,y])=>{ m[y][x]=T.WATER; });
-  [[50,26],[51,26],[50,27],[51,27],[50,28],[51,28]].forEach(([x,y])=>{ m[y][x]=T.WATER; });
-  return m;
-}
-const tileMap = buildMap();
 
-const pois = [
-  { id:0, tx:29, ty:5,  label:'Kisah Kami',    emoji:'💑', visited:false },
-  { id:1, tx:10, ty:18, label:'Akad Nikah',    emoji:'🕌', visited:false },
-  { id:2, tx:47, ty:18, label:'Resepsi',        emoji:'🎊', visited:false },
-  { id:3, tx:10, ty:31, label:'Galeri Foto',    emoji:'📸', visited:false },
-  { id:4, tx:47, ty:35, label:'RSVP & Ucapan', emoji:'✉️', visited:false },
-];
+  function slideCarousel(direction) {
+    const track = document.getElementById('dynamicCarTrack');
+    if (!track || track.children.length === 0) return;
+    const cardFullWidth = track.children[0].offsetWidth + 14;
+    const maxIndex = Math.max(0, cardData.length - 1);
+    let newIndex = state.carouselIndex + direction;
+    if (newIndex < 0) newIndex = 0;
+    if (newIndex > maxIndex) newIndex = maxIndex;
+    state.carouselIndex = newIndex;
+    track.style.transform = `translateX(-${state.carouselIndex * cardFullWidth}px)`;
+  }
 
-const player = {
-  x: (MAP_W/2)*TILE, y: (MAP_H/2)*TILE,
-  vx:0, vy:0,
-  dir:'down',
-  frame:0, frameTimer:0,
-  FRAME_DUR: 10,
-  FRAMES: 4,
-};
-
-const cam = { x:0, y:0 };
-
-const keys = { up:false, down:false, left:false, right:false, interact:false };
-
-let visitedCount = 0;
-let nearPoi = null;
-let popupOpen = false;
-let gameStarted = false;
-let celebrationShown = false;
-let musicPlaying = false;
-let audioCtx = null;
-let musicNodes = [];
-
-const canvas = document.getElementById('game-canvas');
-const ctx = canvas.getContext('2d');
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-const COLORS = {
-  grass:     ['#4a7c3f','#3d6e34','#52883e','#5a9447'],
-  grassDark: '#3d6e34',
-  path:      '#c8a97a',
-  pathDark:  '#b5936a',
-  tree:      '#2d5a1e',
-  treeTrunk: '#6b3e26',
-  flower:    '#f4c2c2',
-  flowerCtr: '#fff0a0',
-  rose:      '#e75480',
-  roseCtr:   '#ffd700',
-  water:     '#5ba5c8',
-  waterHigh: '#7dbdd6',
-  fence:     '#8b5e3c',
-};
-
-function drawTile(x, y, tile, sx, sy) {
-  const px = sx + x*TILE;
-  const py = sy + y*TILE;
-  const T2 = TILE/2;
-  switch(tile) {
-    case T.GRASS: {
-      ctx.fillStyle = COLORS.grass[(x+y)%4];
-      ctx.fillRect(px,py,TILE,TILE);
-      ctx.fillStyle = 'rgba(0,0,0,0.06)';
-      if((x*7+y*3)%5===0) { ctx.fillRect(px+4,py+6,2,2); }
-      if((x*3+y*7)%4===0) { ctx.fillRect(px+14,py+16,2,2); }
-      break;
+  async function handleCarouselClick(idx) {
+    const selected = cardData[idx];
+    // Disable card clicks briefly to avoid double spam
+    const allCards = document.querySelectorAll('.card');
+    allCards.forEach(c => c.style.pointerEvents = 'none');
+    addMessage(selected.icon + ' ' + selected.title, 'user');
+    if (idx === 2) { 
+      // live agent
+      await botDelayReply('🔄 Menghubungkan ke Customer Service prioritas...', 1500);
+      await new Promise(r => setTimeout(r, 700));
+      showTyping();
+      await new Promise(r => setTimeout(r, 1800));
+      removeTyping();
+      state.agentMode = true;
+      const avatarDiv = document.querySelector('.agent-avatar');
+      if (avatarDiv) avatarDiv.textContent = '👨‍💼';
+      addMessage('Halo! Saya **Agent DLS Professional**.\nAda yang bisa saya bantu terkait polis atau klaim?', 'bot');
+      enableInputField();
+    } else {
+      await botDelayReply(selected.replyMsg, 1200);
     }
-    case T.PATH: {
-      ctx.fillStyle = COLORS.path;
-      ctx.fillRect(px,py,TILE,TILE);
-      ctx.fillStyle = COLORS.pathDark;
-      if((x+y)%3===0) ctx.fillRect(px+8,py+8,6,4);
-      if((x+y)%5===2) ctx.fillRect(px+18,py+20,4,6);
-      break;
+    setTimeout(() => {
+      allCards.forEach(c => c.style.pointerEvents = '');
+    }, 800);
+  }
+
+  function enableInputField() {
+    dom.footer.classList.add('visible');
+    dom.input.focus();
+  }
+
+  function getSmartAutoReply(userMsg) {
+    const lowerMsg = userMsg.toLowerCase();
+    if (lowerMsg.includes('polis') || lowerMsg.includes('asuransi')) {
+      return '📄 Untuk informasi polis, buka menu ADSUP DLS atau hubungi agent kami. Butuh bantuan lebih detail?';
     }
-    case T.TREE: {
-      ctx.fillStyle = COLORS.grass[1];
-      ctx.fillRect(px,py,TILE,TILE);
-      ctx.fillStyle = COLORS.treeTrunk;
-      ctx.fillRect(px+12,py+20,8,12);
-      ctx.fillStyle = COLORS.tree;
-      ctx.beginPath();
-      ctx.arc(px+T2, py+14, 14, 0, Math.PI*2);
-      ctx.fill();
-      ctx.fillStyle = '#3a7226';
-      ctx.beginPath();
-      ctx.arc(px+T2-3, py+10, 9, 0, Math.PI*2);
-      ctx.fill();
-      break;
+    if (lowerMsg.includes('referral') || lowerMsg.includes('prospek')) {
+      return '📊 Monitoring referral dapat dilakukan di menu Referral Journey. Ingin saya pandu lebih lanjut?';
     }
-    case T.FLOWER: {
-      ctx.fillStyle = COLORS.grass[0];
-      ctx.fillRect(px,py,TILE,TILE);
-      const fx = px+T2, fy = py+T2;
-      ctx.fillStyle = COLORS.flower;
-      for(let a=0;a<5;a++){
-        const ang = a*Math.PI*2/5;
-        ctx.beginPath();
-        ctx.arc(fx+Math.cos(ang)*6,fy+Math.sin(ang)*6,5,0,Math.PI*2);
-        ctx.fill();
-      }
-      ctx.fillStyle = COLORS.flowerCtr;
-      ctx.beginPath(); ctx.arc(fx,fy,4,0,Math.PI*2); ctx.fill();
-      break;
+    if (lowerMsg.includes('klaim')) {
+      return '📑 Proses klaim bisa dilakukan secara digital. Agent kami siap membantu proses pengajuan.';
     }
-    case T.ROSE: {
-      ctx.fillStyle = COLORS.grass[2];
-      ctx.fillRect(px,py,TILE,TILE);
-      const rx = px+T2, ry = py+T2;
-      ctx.fillStyle = COLORS.rose;
-      for(let a=0;a<5;a++){
-        const ang = a*Math.PI*2/5;
-        ctx.beginPath();
-        ctx.arc(rx+Math.cos(ang)*5,ry+Math.sin(ang)*5,5,0,Math.PI*2);
-        ctx.fill();
-      }
-      ctx.fillStyle = COLORS.roseCtr;
-      ctx.beginPath(); ctx.arc(rx,ry,3,0,Math.PI*2); ctx.fill();
-      break;
+    return 'Terima kasih! Tim DLS akan segera merespon kebutuhan Anda. Untuk informasi lebih cepat, silakan pilih menu di carousel.';
+  }
+
+  async function sendMessageHandler() {
+    const rawMsg = dom.input.value.trim();
+    if (!rawMsg) return;
+    dom.input.value = '';
+    dom.input.style.height = 'auto';
+    addMessage(rawMsg, 'user');
+    const replyMsg = getSmartAutoReply(rawMsg);
+    await botDelayReply(replyMsg, 1300);
+  }
+
+  dom.sendBtn.addEventListener('click', sendMessageHandler);
+  dom.input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessageHandler();
     }
-    case T.WATER: {
-      ctx.fillStyle = COLORS.water;
-      ctx.fillRect(px,py,TILE,TILE);
-      ctx.fillStyle = COLORS.waterHigh;
-      ctx.fillRect(px+4,py+6,TILE-8,4);
-      ctx.fillRect(px+6,py+18,TILE-10,3);
-      break;
-    }
-    case T.FENCE: {
-      ctx.fillStyle = COLORS.grass[1];
-      ctx.fillRect(px,py,TILE,TILE);
-      ctx.fillStyle = COLORS.fence;
-      ctx.fillRect(px,py,TILE,TILE*0.4);
-      ctx.fillStyle = '#a0724a';
-      ctx.fillRect(px+4,py+2,TILE-8,TILE*0.3);
-      break;
-    }
-  }
-}
-
-function drawPlayer(px, py) {
-  const f = player.frame;
-  const legOff = f%2===0 ? 0 : (f<2 ? -2 : 2);
-  const bodyBob = (f===1||f===3) ? 1 : 0;
-  ctx.fillStyle = 'rgba(0,0,0,0.2)';
-  ctx.beginPath();
-  ctx.ellipse(px+TILE/2, py+TILE-4, 8, 3, 0, 0, Math.PI*2);
-  ctx.fill();
-  ctx.fillStyle = '#2C1A0E';
-  ctx.fillRect(px+9, py+22+bodyBob, 5, 8);
-  ctx.fillRect(px+18, py+22+bodyBob, 5, 8);
-  if(player.vx!==0||player.vy!==0) {
-    ctx.fillRect(px+9+legOff, py+22+bodyBob, 5, 8);
-    ctx.fillRect(px+18-legOff, py+22+bodyBob, 5, 8);
-  }
-  ctx.fillStyle = '#5c3a1e';
-  ctx.fillRect(px+8, py+28+bodyBob, 7, 3);
-  ctx.fillRect(px+17, py+28+bodyBob, 7, 3);
-  ctx.fillStyle = '#C9A96E';
-  ctx.fillRect(px+8, py+14+bodyBob, 16, 8);
-  ctx.fillStyle = '#FFFAF0';
-  ctx.fillRect(px+13, py+14+bodyBob, 6, 4);
-  ctx.fillStyle = '#e8c5a0';
-  if(player.vx!==0||player.vy!==0) {
-    ctx.fillRect(px+3, py+14+bodyBob-legOff, 5, 7);
-    ctx.fillRect(px+24, py+14+bodyBob+legOff, 5, 7);
-  } else {
-    ctx.fillRect(px+3, py+16+bodyBob, 5, 7);
-    ctx.fillRect(px+24, py+16+bodyBob, 5, 7);
-  }
-  ctx.fillStyle = '#f5c5a0';
-  ctx.fillRect(px+10, py+4+bodyBob, 12, 10);
-  ctx.fillStyle = '#3d1f10';
-  ctx.fillRect(px+10, py+4+bodyBob, 12, 4);
-  ctx.fillStyle = '#2C1A0E';
-  if(player.dir!=='up'){
-    ctx.fillRect(px+12, py+10+bodyBob, 2, 2);
-    ctx.fillRect(px+18, py+10+bodyBob, 2, 2);
-  }
-  if(player.dir==='down'){
-    ctx.fillStyle = '#c0725a';
-    ctx.fillRect(px+14, py+13+bodyBob, 4, 1);
-  }
-}
-
-function drawBride(worldX, worldY, cx, cy) {
-  const px = worldX - cx + canvas.width/2;
-  const py = worldY - cy + canvas.height/2;
-  if(px < -50 || px > canvas.width+50 || py < -50 || py > canvas.height+50) return;
-  ctx.fillStyle = 'rgba(0,0,0,0.2)';
-  ctx.beginPath(); ctx.ellipse(px+TILE/2, py+TILE-4, 8, 3, 0, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = '#FFFAF0';
-  ctx.beginPath();
-  ctx.moveTo(px+8, py+22);
-  ctx.lineTo(px+2, py+32);
-  ctx.lineTo(px+30, py+32);
-  ctx.lineTo(px+24, py+22);
-  ctx.closePath(); ctx.fill();
-  ctx.fillStyle = '#F2C4CE';
-  ctx.fillRect(px+8, py+22, 16, 2);
-  ctx.fillStyle = '#FFFAF0';
-  ctx.fillRect(px+9, py+14, 14, 9);
-  ctx.fillStyle = 'rgba(255,250,240,0.7)';
-  ctx.fillRect(px+8, py+4, 16, 14);
-  ctx.fillStyle = '#f5c5a0';
-  ctx.fillRect(px+10, py+6, 12, 10);
-  ctx.fillStyle = '#3d1f10';
-  ctx.fillRect(px+10, py+6, 12, 3);
-  ctx.fillStyle = '#F2C4CE';
-  ctx.fillRect(px+9, py+5, 14, 3);
-  ctx.fillStyle = '#C9A96E';
-  ctx.fillRect(px+13, py+4, 6, 2);
-  ctx.fillStyle = '#2C1A0E';
-  ctx.fillRect(px+12, py+11, 2, 2);
-  ctx.fillRect(px+18, py+11, 2, 2);
-  ctx.fillStyle = '#e75480';
-  ctx.beginPath(); ctx.arc(px+26, py+21, 5, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = '#f4c2c2';
-  ctx.beginPath(); ctx.arc(px+24, py+19, 3, 0, Math.PI*2); ctx.fill();
-}
-
-function drawPoi(poi, cx, cy, time) {
-  const px = poi.tx*TILE - cx + canvas.width/2;
-  const py = poi.ty*TILE - cy + canvas.height/2;
-  if(px<-50||px>canvas.width+50||py<-50||py>canvas.height+50) return;
-  ctx.fillStyle = poi.visited ? 'rgba(201,169,110,0.25)' : 'rgba(242,196,206,0.3)';
-  ctx.strokeStyle = poi.visited ? '#C9A96E' : '#F2C4CE';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.arc(px+TILE/2, py+TILE/2, TILE*0.6, 0, Math.PI*2);
-  ctx.fill(); ctx.stroke();
-  ctx.font = '18px serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(poi.emoji, px+TILE/2, py+TILE/2);
-  if(nearPoi && nearPoi.id===poi.id && !popupOpen) {
-    const bob = Math.sin(time/300)*4;
-    ctx.fillStyle = '#e8d32a';
-    ctx.strokeStyle = '#2C1A0E';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.arc(px+TILE/2, py-14+bob, 10, 0, Math.PI*2);
-    ctx.fill(); ctx.stroke();
-    ctx.fillStyle = '#2C1A0E';
-    ctx.font = 'bold 12px Lato, sans-serif';
-    ctx.fillText('!', px+TILE/2, py-14+bob);
-  }
-  if(poi.visited) {
-    ctx.fillStyle = '#C9A96E';
-    ctx.font = 'bold 14px sans-serif';
-    ctx.fillText('✓', px+TILE-4, py+4);
-  }
-  ctx.fillStyle = poi.visited ? '#C9A96E' : '#F2C4CE';
-  ctx.font = '10px Lato, sans-serif';
-  ctx.fillText(poi.label, px+TILE/2, py+TILE+6);
-}
-
-function drawArch(worldX, worldY, cx, cy) {
-  const px = worldX - cx + canvas.width/2;
-  const py = worldY - cy + canvas.height/2;
-  if(px < -80 || px > canvas.width+80) return;
-  ctx.fillStyle = '#8b5e3c';
-  ctx.fillRect(px+4, py+8, 8, 40);
-  ctx.fillRect(px+52, py+8, 8, 40);
-  ctx.strokeStyle = '#8b5e3c';
-  ctx.lineWidth = 8;
-  ctx.beginPath();
-  ctx.arc(px+TILE, py+16, 20, Math.PI, 0);
-  ctx.stroke();
-  const flowerCols = ['#e75480','#f4c2c2','#FFFAF0','#ffd700'];
-  for(let i=0;i<6;i++){
-    const ang = Math.PI + i*(Math.PI/5);
-    const fx = px+TILE + Math.cos(ang)*20;
-    const fy = py+16 + Math.sin(ang)*20;
-    ctx.fillStyle = flowerCols[i%4];
-    ctx.beginPath(); ctx.arc(fx,fy,4,0,Math.PI*2); ctx.fill();
-  }
-}
-
-let lastTime = 0;
-
-function render(time) {
-  if(!gameStarted) { requestAnimationFrame(render); return; }
-  if(!lastTime) lastTime = time;
-  lastTime = time;
-
-  if(player.vx!==0 || player.vy!==0) {
-    player.frameTimer += 1;
-    if(player.frameTimer >= player.FRAME_DUR) {
-      player.frameTimer = 0;
-      player.frame = (player.frame+1) % player.FRAMES;
-    }
-  } else { player.frame = 0; player.frameTimer = 0; }
-
-  if(!popupOpen) {
-    let mx = 0, my = 0;
-    if(keys.left) mx -= PLAYER_SPEED;
-    if(keys.right) mx += PLAYER_SPEED;
-    if(keys.up) my -= PLAYER_SPEED;
-    if(keys.down) my += PLAYER_SPEED;
-    if(mx!==0&&my!==0) { mx*=0.707; my*=0.707; }
-    if(mx<0) player.dir='left'; else if(mx>0) player.dir='right';
-    if(my<0) player.dir='up';   else if(my>0) player.dir='down';
-    player.vx = mx; player.vy = my;
-    const nx = player.x + mx;
-    const ny = player.y + my;
-    const checkTile = (wx, wy) => {
-      const tx = Math.floor(wx/TILE), ty = Math.floor(wy/TILE);
-      if(tx<0||ty<0||tx>=MAP_W||ty>=MAP_H) return true;
-      const t = tileMap[ty][tx];
-      return t===T.TREE||t===T.FENCE||t===T.WATER;
-    };
-    const hw = 10, hh = 10;
-    const canX = !checkTile(nx+hw, player.y+hh) && !checkTile(nx-hw, player.y+hh) &&
-                 !checkTile(nx+hw, player.y-hh) && !checkTile(nx-hw, player.y-hh);
-    const canY = !checkTile(player.x+hw, ny+hh) && !checkTile(player.x-hw, ny+hh) &&
-                 !checkTile(player.x+hw, ny-hh) && !checkTile(player.x-hw, ny-hh);
-    if(canX) player.x = Math.max(TILE, Math.min((MAP_W-2)*TILE, nx));
-    if(canY) player.y = Math.max(TILE, Math.min((MAP_H-2)*TILE, ny));
-  }
-
-  cam.x += (player.x - cam.x) * 0.12;
-  cam.y += (player.y - cam.y) * 0.12;
-  const halfW = canvas.width/2, halfH = canvas.height/2;
-  cam.x = Math.max(halfW, Math.min(MAP_W*TILE - halfW, cam.x));
-  cam.y = Math.max(halfH, Math.min(MAP_H*TILE - halfH, cam.y));
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  const startTX = Math.max(0, Math.floor((cam.x - halfW)/TILE) - 1);
-  const endTX   = Math.min(MAP_W-1, Math.ceil((cam.x + halfW)/TILE) + 1);
-  const startTY = Math.max(0, Math.floor((cam.y - halfH)/TILE) - 1);
-  const endTY   = Math.min(MAP_H-1, Math.ceil((cam.y + halfH)/TILE) + 1);
-  const offX = Math.round(canvas.width/2  - cam.x);
-  const offY = Math.round(canvas.height/2 - cam.y);
-
-  for(let ty=startTY; ty<=endTY; ty++) {
-    for(let tx=startTX; tx<=endTX; tx++) {
-      drawTile(tx, ty, tileMap[ty][tx], offX, offY);
-    }
-  }
-
-  drawArch(pois[0].tx*TILE - TILE, pois[0].ty*TILE - TILE, cam.x, cam.y);
-  drawBride(pois[0].tx*TILE + TILE*2, pois[0].ty*TILE + TILE, cam.x, cam.y);
-  pois.forEach(p => drawPoi(p, cam.x, cam.y, time));
-
-  const plScreenX = Math.round(player.x - cam.x + canvas.width/2)  - TILE/2;
-  const plScreenY = Math.round(player.y - cam.y + canvas.height/2) - TILE/2;
-  drawPlayer(plScreenX, plScreenY);
-
-  // Check nearby POI
-  nearPoi = null;
-  pois.forEach(poi => {
-    const dist = Math.hypot(player.x - poi.tx*TILE, player.y - poi.ty*TILE);
-    if(dist < TILE*2.2) nearPoi = poi;
+  });
+  dom.input.addEventListener('input', function () {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 88) + 'px';
   });
 
-  const prompt = document.getElementById('interact-prompt');
-  const mobileBtn = document.getElementById('interact-btn-mobile');
-  if(nearPoi && !popupOpen) {
-    prompt.style.display = 'block';
-    mobileBtn.style.display = 'flex';
-  } else {
-    prompt.style.display = 'none';
-    mobileBtn.style.display = 'none';
-  }
-
-  // Handle interact key (E or Enter)
-  if(keys.interact && !popupOpen && nearPoi) {
-    keys.interact = false;
-    openPoi(nearPoi);
-  }
-
-  updateCountdown();
-  requestAnimationFrame(render);
-}
-
-function updateCountdown() {
-  const now = new Date();
-  const diff = WEDDING_DATE - now;
-  const el = document.getElementById('cd-time');
-  if(diff <= 0) { el.textContent = '🎊 Hari Ini!'; return; }
-  const d = Math.floor(diff/86400000);
-  const h = Math.floor((diff%86400000)/3600000);
-  const m = Math.floor((diff%3600000)/60000);
-  const s = Math.floor((diff%60000)/1000);
-  el.textContent = `${d}h ${h}j ${m}m ${s}d`;
-}
-setInterval(updateCountdown, 1000);
-
-function openPoi(poi) {
-  if(popupOpen) return;
-  popupOpen = true;
-  if(!poi.visited) {
-    poi.visited = true;
-    visitedCount++;
-    document.getElementById('prog-count').textContent = visitedCount;
-    if(visitedCount >= 5 && !celebrationShown) {
-      setTimeout(showCelebration, 800);
+  // Welcome message & carousel
+  let welcomeShown = false;
+  function openChatWidget() {
+    state.isOpen = true;
+    dom.widget.classList.add('open');
+    dom.fab.innerHTML = '<i class="fa-regular fa-xmark"></i>';
+    if (!welcomeShown) {
+      welcomeShown = true;
+      setTimeout(() => {
+        addMessage('Halo! 👋 Selamat datang di DLS Virtual Assistant premium. Silakan pilih kebutuhan Anda di menu kartu di bawah.', 'bot', { carousel: true });
+      }, 380);
     }
   }
-  document.getElementById('popup-title').textContent = poi.label;
-  document.getElementById('popup-subtitle').textContent = poi.emoji + ' ' + ['Pos 1','Pos 2','Pos 3','Pos 4','Pos 5'][poi.id];
-  document.getElementById('popup-body').innerHTML = getPoiContent(poi.id);
-  if(poi.id===4) bindRsvp();
-  document.getElementById('popup-overlay').classList.add('active');
-}
 
-function closePopup() {
-  document.getElementById('popup-overlay').classList.remove('active');
-  popupOpen = false;
-}
-
-function getPoiContent(id) {
-  switch(id) {
-    case 0: return `
-      <div class="info-card">
-        <h3>💑 Perjalanan Kami</h3>
-        <p>Arya dan Sekar pertama kali bertemu di sebuah kafe kecil di Jogja pada musim hujan tahun 2019. Sebuah percakapan tentang buku mengawali segalanya.</p>
-      </div>
-      <div class="info-card">
-        <h3>🌸 Jatuh Cinta</h3>
-        <p>Setahun bersahabat, keduanya menyadari bahwa ada perasaan yang lebih dalam. Arya melamar Sekar di tepi Pantai Parangtritis, 14 Februari 2024.</p>
-      </div>
-      <div class="info-card">
-        <h3>✨ Kini</h3>
-        <p>Dengan restu keluarga dan ridho Allah, kami siap melangkah menuju babak baru dalam ikatan yang suci. Terima kasih telah menjadi bagian dari perjalanan kami.</p>
-      </div>`;
-    case 1: return `
-      <div class="info-card">
-        <p class="label">📅 Tanggal</p>
-        <h3>Sabtu, 12 Juli 2025</h3>
-        <p class="label" style="margin-top:10px">⏰ Waktu</p>
-        <p>08.00 – 10.00 WIB</p>
-        <p class="label" style="margin-top:10px">📍 Lokasi</p>
-        <p>Masjid Agung Al-Falah<br>Jl. Sudirman No. 1, Yogyakarta</p>
-      </div>
-      <p>Kami memohon doa restu dan kehadiran Bapak/Ibu/Saudara/i dalam prosesi ijab kabul yang sakral ini.</p>
-      <a href="https://maps.google.com/?q=Masjid+Agung+Al-Falah+Yogyakarta" target="_blank" class="maps-btn">🗺️ Buka Google Maps</a>`;
-    case 2: return `
-      <div class="info-card">
-        <p class="label">📅 Tanggal</p>
-        <h3>Sabtu, 12 Juli 2025</h3>
-        <p class="label" style="margin-top:10px">⏰ Waktu</p>
-        <p>11.00 – 15.00 WIB</p>
-        <p class="label" style="margin-top:10px">📍 Lokasi</p>
-        <p>Pendopo Agung Sari Asih<br>Jl. Malioboro No. 58, Yogyakarta</p>
-      </div>
-      <div class="info-card">
-        <h3>🍽️ Menu & Hiburan</h3>
-        <p>Hidangan spesial nusantara, dekorasi taman romantis, pertunjukan gamelan live, dan sesi foto bersama.</p>
-      </div>
-      <a href="https://maps.google.com/?q=Pendopo+Agung+Yogyakarta" target="_blank" class="maps-btn">🗺️ Buka Google Maps</a>`;
-    case 3: return `
-      <p style="margin-bottom:14px">Beberapa momen indah dalam perjalanan kami bersama. 📸</p>
-      <div class="gallery-grid">
-        <div class="gallery-placeholder"><div class="emoji">🌅</div><div class="caption">First Meeting<br>Jogja 2019</div></div>
-        <div class="gallery-placeholder"><div class="emoji">☕</div><div class="caption">Kafe Favorit<br>Kami</div></div>
-        <div class="gallery-placeholder"><div class="emoji">🏖️</div><div class="caption">Lamaran<br>Parangtritis</div></div>
-        <div class="gallery-placeholder"><div class="emoji">💍</div><div class="caption">Foto Prewedding<br>2025</div></div>
-      </div>`;
-    case 4: return `
-      <p style="margin-bottom:14px">Kehadiran dan doa restu Anda adalah kebahagiaan terbesar bagi kami. 🙏</p>
-      <div id="rsvp-wrap">
-        <div class="rsvp-form" id="rsvp-form-el">
-          <input type="text" id="rsvp-name" placeholder="Nama Lengkap Anda" required>
-          <select id="rsvp-attend">
-            <option value="">-- Konfirmasi Kehadiran --</option>
-            <option value="hadir">✅ Insyaallah Hadir</option>
-            <option value="tidak">❌ Belum Bisa Hadir</option>
-            <option value="mungkin">🤔 Masih Belum Pasti</option>
-          </select>
-          <textarea id="rsvp-msg" placeholder="Tulis ucapan & doa untuk pengantin..."></textarea>
-          <button class="rsvp-submit" id="rsvp-submit-btn">Kirim Ucapan 💌</button>
-        </div>
-        <div class="rsvp-success" id="rsvp-success">
-          <div class="big-emoji">🎉</div>
-          <p>Terima kasih atas ucapan dan konfirmasi Anda!</p>
-          <p style="font-size:0.8rem;color:#a8823c;margin-top:6px;">Kami sangat menantikan kehadiran Anda.</p>
-        </div>
-      </div>
-      <div class="wishes-list" id="wishes-list"></div>`;
+  function closeChatWidget() {
+    state.isOpen = false;
+    dom.widget.classList.remove('open');
+    dom.fab.innerHTML = '<i class="fa-regular fa-message"></i><span class="fab-badge"></span>';
   }
-  return '';
-}
 
-function bindRsvp() {
-  renderWishes();
-  document.getElementById('rsvp-submit-btn').addEventListener('click', () => {
-    const name = document.getElementById('rsvp-name').value.trim();
-    const attend = document.getElementById('rsvp-attend').value;
-    const msg = document.getElementById('rsvp-msg').value.trim();
-    if(!name || !attend) { alert('Mohon isi nama dan konfirmasi kehadiran.'); return; }
-    wishes.push({ name, attend, msg: msg || '(Tanpa pesan)' });
-    localStorage.setItem('wedding_wishes', JSON.stringify(wishes));
-    document.getElementById('rsvp-form-el').style.display = 'none';
-    document.getElementById('rsvp-success').style.display = 'block';
-    renderWishes();
+  dom.fab.addEventListener('click', () => state.isOpen ? closeChatWidget() : openChatWidget());
+  dom.closeBtn.addEventListener('click', closeChatWidget);
+
+  // handle resize for carousel dynamic
+  window.addEventListener('resize', () => {
+    if (document.getElementById('dynamicCarTrack')) updateCarouselWidth();
   });
-}
-
-function renderWishes() {
-  const el = document.getElementById('wishes-list');
-  if(!el) return;
-  if(wishes.length===0) { el.innerHTML = '<p style="color:#a8823c;font-size:0.8rem;text-align:center;padding:10px;">Belum ada ucapan. Jadilah yang pertama! 💌</p>'; return; }
-  el.innerHTML = wishes.slice(-5).reverse().map(w => `
-    <div class="wish-item">
-      <div class="wname">${escHtml(w.name)} ${w.attend==='hadir'?'✅':w.attend==='tidak'?'❌':'🤔'}</div>
-      <div class="wmsg">"${escHtml(w.msg)}"</div>
-    </div>`).join('');
-}
-
-function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function showCelebration() {
-  celebrationShown = true;
-  const cc = document.getElementById('confetti-canvas');
-  cc.width = window.innerWidth; cc.height = window.innerHeight;
-  cc.style.display = 'block';
-  document.getElementById('celebration-msg').style.display = 'block';
-  const ccx = cc.getContext('2d');
-  const particles = [];
-  const colors = ['#C9A96E','#F2C4CE','#FFFAF0','#e75480','#ffd700','#a8823c'];
-  for(let i=0;i<150;i++) {
-    particles.push({
-      x: Math.random()*cc.width, y: Math.random()*cc.height - cc.height,
-      vx: (Math.random()-0.5)*3, vy: 2+Math.random()*4,
-      r: 4+Math.random()*6, color: colors[Math.floor(Math.random()*colors.length)],
-      rot: Math.random()*360, rotV: (Math.random()-0.5)*5,
-    });
-  }
-  let animId;
-  function animConf() {
-    ccx.clearRect(0,0,cc.width,cc.height);
-    let alive = 0;
-    particles.forEach(p => {
-      p.x += p.vx; p.y += p.vy; p.rot += p.rotV;
-      if(p.y < cc.height+20) alive++;
-      ccx.save();
-      ccx.translate(p.x,p.y); ccx.rotate(p.rot*Math.PI/180);
-      ccx.fillStyle = p.color;
-      ccx.fillRect(-p.r/2,-p.r/2,p.r,p.r);
-      ccx.restore();
-    });
-    if(alive>0) animId = requestAnimationFrame(animConf);
-    else { cc.style.display='none'; cancelAnimationFrame(animId); }
-  }
-  animConf();
-}
-
-function spawnPetals() {
-  const petals = ['🌸','🌺','🌷','🌹','✿','❀'];
-  for(let i=0;i<12;i++) {
-    const el = document.createElement('div');
-    el.className = 'petal';
-    el.textContent = petals[Math.floor(Math.random()*petals.length)];
-    el.style.left = Math.random()*100+'vw';
-    el.style.fontSize = (0.8+Math.random()*0.8)+'rem';
-    el.style.animationDuration = (6+Math.random()*8)+'s';
-    el.style.animationDelay = (Math.random()*10)+'s';
-    el.style.opacity = 0.4+Math.random()*0.4;
-    document.body.appendChild(el);
-    el.addEventListener('animationend', () => el.remove());
-  }
-}
-setInterval(spawnPetals, 4000);
-spawnPetals();
-
-function createAmbientMusic() {
-  if(audioCtx) return;
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  const masterGain = audioCtx.createGain();
-  masterGain.gain.setValueAtTime(0.06, audioCtx.currentTime);
-  masterGain.connect(audioCtx.destination);
-  musicNodes = [masterGain];
-  const notes = [261.63, 329.63, 392.00, 523.25, 440.00, 349.23, 392.00, 523.25];
-  let noteIdx = 0;
-  function playNote() {
-    if(!musicPlaying) return;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(notes[noteIdx % notes.length], audioCtx.currentTime);
-    gain.gain.setValueAtTime(0, audioCtx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 0.1);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.8);
-    osc.connect(gain); gain.connect(masterGain);
-    osc.start(); osc.stop(audioCtx.currentTime + 2);
-    noteIdx++;
-    setTimeout(playNote, 1400);
-  }
-  const pad = audioCtx.createOscillator();
-  const padGain = audioCtx.createGain();
-  pad.type = 'sine';
-  pad.frequency.setValueAtTime(130.81, audioCtx.currentTime);
-  padGain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-  pad.connect(padGain); padGain.connect(masterGain);
-  pad.start();
-  musicNodes.push(pad, padGain);
-  playNote();
-}
-
-function toggleMusic() {
-  const btn = document.getElementById('music-btn');
-  if(!musicPlaying) {
-    musicPlaying = true;
-    createAmbientMusic();
-    if(audioCtx && audioCtx.state==='suspended') audioCtx.resume();
-    btn.textContent = '🔊';
-  } else {
-    musicPlaying = false;
-    if(audioCtx) audioCtx.suspend();
-    btn.textContent = '🔇';
-  }
-}
-
-/* ============================================================
-   INPUT HANDLERS
-   ============================================================ */
-document.addEventListener('keydown', e => {
-  if(!gameStarted) return;
-  switch(e.key) {
-    case 'ArrowUp':    case 'w': case 'W': keys.up=true; e.preventDefault(); break;
-    case 'ArrowDown':  case 's': case 'S': keys.down=true; e.preventDefault(); break;
-    case 'ArrowLeft':  case 'a': case 'A': keys.left=true; e.preventDefault(); break;
-    case 'ArrowRight': case 'd': case 'D': keys.right=true; e.preventDefault(); break;
-    case 'e': case 'E':
-    case 'Enter':  // ← ENTER also triggers interact
-      if(!popupOpen && nearPoi) {
-        keys.interact = true;
-      } else if(popupOpen && e.key==='Enter') {
-        // don't close on Enter (user might be typing in RSVP)
-      }
-      break;
-    case 'Escape': if(popupOpen) closePopup(); break;
-  }
-});
-document.addEventListener('keyup', e => {
-  switch(e.key) {
-    case 'ArrowUp':    case 'w': case 'W': keys.up=false; break;
-    case 'ArrowDown':  case 's': case 'S': keys.down=false; break;
-    case 'ArrowLeft':  case 'a': case 'A': keys.left=false; break;
-    case 'ArrowRight': case 'd': case 'D': keys.right=false; break;
-  }
-});
-
-// D-pad — solid touch/mouse support
-function setupDpad(id, key) {
-  const btn = document.getElementById(id);
-  btn.addEventListener('touchstart', e => { e.preventDefault(); keys[key]=true; btn.classList.add('pressed'); }, {passive:false});
-  btn.addEventListener('touchend',   e => { e.preventDefault(); keys[key]=false; btn.classList.remove('pressed'); }, {passive:false});
-  btn.addEventListener('touchcancel',e => { keys[key]=false; btn.classList.remove('pressed'); }, {passive:false});
-  btn.addEventListener('mousedown',  e => { e.preventDefault(); keys[key]=true; btn.classList.add('pressed'); });
-  btn.addEventListener('mouseup',    e => { keys[key]=false; btn.classList.remove('pressed'); });
-  btn.addEventListener('mouseleave', e => { keys[key]=false; btn.classList.remove('pressed'); });
-}
-setupDpad('btn-up','up');
-setupDpad('btn-down','down');
-setupDpad('btn-left','left');
-setupDpad('btn-right','right');
-
-// Tap interact button
-document.getElementById('interact-btn-mobile').addEventListener('touchstart', e => {
-  e.preventDefault();
-  if(nearPoi && !popupOpen) openPoi(nearPoi);
-}, {passive:false});
-document.getElementById('interact-btn-mobile').addEventListener('click', () => {
-  if(nearPoi && !popupOpen) openPoi(nearPoi);
-});
-
-// Canvas tap — open POI when tapping on or very near it on mobile
-canvas.addEventListener('click', e => {
-  if(!gameStarted || popupOpen) return;
-  if(nearPoi) openPoi(nearPoi);
-});
-
-document.getElementById('popup-close').addEventListener('click', closePopup);
-document.getElementById('popup-overlay').addEventListener('click', e => {
-  if(e.target===document.getElementById('popup-overlay')) closePopup();
-});
-document.getElementById('close-cel').addEventListener('click', () => {
-  document.getElementById('celebration-msg').style.display='none';
-});
-document.getElementById('music-btn').addEventListener('click', toggleMusic);
-
-/* ============================================================
-   START GAME
-   ============================================================ */
-document.getElementById('start-btn').addEventListener('click', () => {
-  const intro = document.getElementById('intro-screen');
-  const wrapper = document.getElementById('game-wrapper');
-  cam.x = player.x;
-  cam.y = player.y;
-  intro.classList.add('fade-out');
-  setTimeout(() => {
-    intro.style.display = 'none';
-    wrapper.classList.add('visible');
-    gameStarted = true;
-    lastTime = 0;
-    requestAnimationFrame(render);
-  }, 800);
-  setTimeout(() => {
-    musicPlaying = true;
-    createAmbientMusic();
-    document.getElementById('music-btn').textContent = '🔊';
-  }, 900);
-});
 </script>
 </body>
 </html>
