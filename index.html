@@ -53,10 +53,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Lato', s
   50% { box-shadow: 0 6px 30px rgba(201,169,110,0.7); }
 }
 
-/* Pixel characters on intro */
-.intro-chars { display: flex; justify-content: center; gap: 40px; margin-bottom: 28px; }
-.intro-char { image-rendering: pixelated; width: 48px; height: 48px; }
-
 /* ============================================================
    GAME CONTAINER
    ============================================================ */
@@ -66,7 +62,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Lato', s
 }
 #game-wrapper.visible { opacity: 1; }
 
-/* Canvas */
 #game-canvas { display: block; image-rendering: pixelated; cursor: default; }
 
 /* ============================================================
@@ -114,52 +109,113 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Lato', s
    INTERACTION PROMPT
    ============================================================ */
 #interact-prompt {
-  position: fixed; bottom: 130px; left: 50%; transform: translateX(-50%);
-  background: rgba(26,14,8,0.85); border: 1px solid #C9A96E;
+  position: fixed; bottom: 155px; left: 50%; transform: translateX(-50%);
+  background: rgba(26,14,8,0.9); border: 1.5px solid #C9A96E;
   color: #FFFAF0; padding: 8px 20px; border-radius: 20px;
   font-size: 0.8rem; letter-spacing: 0.1em;
   display: none; z-index: 10; pointer-events: none;
   animation: float-prompt 1.5s ease-in-out infinite;
+  white-space: nowrap;
 }
 @keyframes float-prompt {
   0%,100% { transform: translateX(-50%) translateY(0); }
   50% { transform: translateX(-50%) translateY(-4px); }
 }
 #interact-prompt kbd {
-  background: #C9A96E; color: #1a0e08; padding: 2px 6px;
+  background: #C9A96E; color: #1a0e08; padding: 2px 8px;
   border-radius: 4px; font-weight: 700; font-size: 0.75rem; margin: 0 4px;
 }
 
 /* ============================================================
-   MOBILE CONTROLS
+   MOBILE CONTROLS — redesigned for clarity
    ============================================================ */
 #mobile-controls {
-  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-  display: grid; grid-template-columns: 48px 48px 48px;
-  grid-template-rows: 48px 48px; gap: 6px; z-index: 10;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: 60px 60px 60px;
+  grid-template-rows: 60px 60px;
+  gap: 8px;
+  z-index: 10;
 }
+
 .dpad-btn {
-  background: rgba(201,169,110,0.2); border: 1.5px solid rgba(201,169,110,0.5);
-  border-radius: 8px; color: #C9A96E; font-size: 1.2rem;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; user-select: none; -webkit-user-select: none;
-  touch-action: manipulation; transition: background 0.1s;
+  background: rgba(15, 8, 4, 0.82);
+  border: 2.5px solid rgba(201,169,110,0.85);
+  border-radius: 12px;
+  color: #F5D98B;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: background 0.1s, transform 0.08s, border-color 0.1s;
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 0 0 1px rgba(201,169,110,0.15);
 }
-.dpad-btn:active, .dpad-btn.pressed { background: rgba(201,169,110,0.5); }
-#btn-up { grid-column: 2; grid-row: 1; }
+
+.dpad-btn:active, .dpad-btn.pressed {
+  background: rgba(201,169,110,0.35);
+  border-color: #C9A96E;
+  transform: scale(0.93);
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.5),
+    inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Arrow shapes via CSS for crispness */
+.dpad-btn .arrow-icon {
+  width: 0; height: 0; display: block;
+}
+#btn-up   { grid-column: 2; grid-row: 1; }
 #btn-left { grid-column: 1; grid-row: 2; }
 #btn-down { grid-column: 2; grid-row: 2; }
-#btn-right { grid-column: 3; grid-row: 2; }
+#btn-right{ grid-column: 3; grid-row: 2; }
 
-#interact-btn-mobile {
-  position: fixed; bottom: 16px; right: 20px;
-  background: rgba(242,196,206,0.25); border: 1.5px solid rgba(242,196,206,0.6);
-  color: #F2C4CE; border-radius: 50%; width: 52px; height: 52px;
-  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;
-  cursor: pointer; z-index: 10; display: none;
-  align-items: center; justify-content: center; text-align: center;
-  touch-action: manipulation;
+/* Center dot */
+.dpad-center {
+  grid-column: 2; grid-row: 2;
+  pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
 }
+
+/* ============================================================
+   INTERACT BUTTON (mobile) — tap to open
+   ============================================================ */
+#interact-btn-mobile {
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  background: linear-gradient(135deg, rgba(201,169,110,0.3), rgba(168,130,60,0.4));
+  border: 2.5px solid #C9A96E;
+  color: #F5D98B;
+  border-radius: 50%;
+  width: 64px; height: 64px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  z-index: 10;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.3;
+  touch-action: manipulation;
+  box-shadow: 0 4px 16px rgba(201,169,110,0.4), 0 0 0 1px rgba(201,169,110,0.2);
+  animation: pulse-btn 1.5s ease-in-out infinite;
+  flex-direction: column;
+  gap: 1px;
+}
+#interact-btn-mobile .ibm-icon { font-size: 1.2rem; display: block; }
+#interact-btn-mobile .ibm-label { font-size: 0.6rem; display: block; }
 
 /* ============================================================
    POPUP / MODAL
@@ -316,6 +372,11 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Lato', s
   .gallery-grid { grid-template-columns: 1fr 1fr; }
   #popup-box { border-radius: 0; max-height: 90vh; }
   .popup-body { padding: 16px; }
+  #mobile-controls {
+    grid-template-columns: 56px 56px 56px;
+    grid-template-rows: 56px 56px;
+  }
+  .dpad-btn { font-size: 1.5rem; }
 }
 </style>
 </head>
@@ -360,18 +421,21 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Lato', s
   <button id="music-btn" title="Toggle Music">🎵</button>
 
   <!-- Interact prompt -->
-  <div id="interact-prompt">Tekan <kbd>E</kbd> untuk Interaksi</div>
+  <div id="interact-prompt">Tekan <kbd>Enter</kbd> atau <kbd>E</kbd> untuk Interaksi</div>
 
   <!-- Mobile D-Pad -->
   <div id="mobile-controls">
-    <button class="dpad-btn" id="btn-up">↑</button>
-    <button class="dpad-btn" id="btn-left">←</button>
-    <button class="dpad-btn" id="btn-down">↓</button>
-    <button class="dpad-btn" id="btn-right">→</button>
+    <button class="dpad-btn" id="btn-up"    aria-label="Atas">▲</button>
+    <button class="dpad-btn" id="btn-left"  aria-label="Kiri">◀</button>
+    <button class="dpad-btn" id="btn-down"  aria-label="Bawah">▼</button>
+    <button class="dpad-btn" id="btn-right" aria-label="Kanan">▶</button>
   </div>
 
   <!-- Mobile interact button -->
-  <button id="interact-btn-mobile">✦ E</button>
+  <button id="interact-btn-mobile" aria-label="Interaksi">
+    <span class="ibm-icon">✦</span>
+    <span class="ibm-label">BUKA</span>
+  </button>
 </div>
 
 <!-- ============================================================
@@ -404,59 +468,38 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Lato', s
   <button class="close-cel" id="close-cel">Tutup ✕</button>
 </div>
 
-<!-- ============================================================
-     AUDIO (Web Audio API - generated tone)
-     ============================================================ -->
-<audio id="bg-music" loop preload="auto">
-  <!-- Placeholder: music won't load but button will toggle state -->
-</audio>
+<audio id="bg-music" loop preload="auto"></audio>
 
 <script>
 /* ============================================================
    CONSTANTS & CONFIG
    ============================================================ */
-const TILE = 32;          // tile size in px
-const MAP_W = 60;         // map width in tiles
-const MAP_H = 45;         // map height in tiles
-const PLAYER_SPEED = 2.5; // pixels per frame
+const TILE = 32;
+const MAP_W = 60;
+const MAP_H = 45;
+const PLAYER_SPEED = 2.5;
 const WEDDING_DATE = new Date('2025-07-12T08:00:00');
 
-/* ============================================================
-   WISHES STORAGE
-   ============================================================ */
 let wishes = JSON.parse(localStorage.getItem('wedding_wishes') || '[]');
 
-/* ============================================================
-   TILE TYPES (for rendering)
-   0 = grass, 1 = path, 2 = tree, 3 = flower, 4 = water, 5 = fence
-   ============================================================ */
 const T = { GRASS:0, PATH:1, TREE:2, FLOWER:3, WATER:4, FENCE:5, ROSE:6, ARCH:7 };
 
-// Generate tile map
 function buildMap() {
   const m = [];
   for (let y = 0; y < MAP_H; y++) {
     m[y] = [];
     for (let x = 0; x < MAP_W; x++) m[y][x] = T.GRASS;
   }
-
-  // Outer fence
   for (let x = 0; x < MAP_W; x++) { m[0][x] = T.FENCE; m[MAP_H-1][x] = T.FENCE; }
   for (let y = 0; y < MAP_H; y++) { m[y][0] = T.FENCE; m[y][MAP_W-1] = T.FENCE; }
-
-  // Main cross paths
   for (let x = 1; x < MAP_W-1; x++) { m[22][x] = T.PATH; m[23][x] = T.PATH; }
   for (let y = 1; y < MAP_H-1; y++) { m[y][28] = T.PATH; m[y][29] = T.PATH; m[y][30] = T.PATH; }
-
-  // Path variations
   for (let x = 5; x < 27; x++) { m[12][x] = T.PATH; m[13][x] = T.PATH; }
   for (let x = 32; x < MAP_W-2; x++) { m[12][x] = T.PATH; m[13][x] = T.PATH; }
   for (let y = 14; y < 22; y++) { m[y][10] = T.PATH; m[y][11] = T.PATH; }
   for (let y = 14; y < 22; y++) { m[y][46] = T.PATH; m[y][47] = T.PATH; }
   for (let y = 24; y < 33; y++) { m[y][10] = T.PATH; m[y][11] = T.PATH; }
   for (let y = 24; y < 38; y++) { m[y][46] = T.PATH; m[y][47] = T.PATH; }
-
-  // Trees clusters
   const trees = [
     [3,3],[4,3],[3,4],[5,5],[7,3],[8,4],
     [52,3],[53,3],[54,4],[56,3],[57,4],
@@ -468,8 +511,6 @@ function buildMap() {
     [40,35],[41,35],[42,36],
   ];
   trees.forEach(([x,y]) => { if(m[y]&&m[y][x]!==undefined && m[y][x]===T.GRASS) m[y][x]=T.TREE; });
-
-  // Flower borders along main paths
   for (let x = 1; x < MAP_W-1; x++) {
     if(m[21][x]===T.GRASS) m[21][x]=T.FLOWER;
     if(m[24][x]===T.GRASS) m[24][x]=T.FLOWER;
@@ -478,18 +519,12 @@ function buildMap() {
     if(m[y][27]===T.GRASS) m[y][27]=T.ROSE;
     if(m[y][31]===T.GRASS) m[y][31]=T.ROSE;
   }
-
-  // Small ponds
   [[6,26],[7,26],[6,27],[7,27],[6,28],[7,28]].forEach(([x,y])=>{ m[y][x]=T.WATER; });
   [[50,26],[51,26],[50,27],[51,27],[50,28],[51,28]].forEach(([x,y])=>{ m[y][x]=T.WATER; });
-
   return m;
 }
 const tileMap = buildMap();
 
-/* ============================================================
-   POINT OF INTEREST DEFINITIONS
-   ============================================================ */
 const pois = [
   { id:0, tx:29, ty:5,  label:'Kisah Kami',    emoji:'💑', visited:false },
   { id:1, tx:10, ty:18, label:'Akad Nikah',    emoji:'🕌', visited:false },
@@ -498,30 +533,19 @@ const pois = [
   { id:4, tx:47, ty:35, label:'RSVP & Ucapan', emoji:'✉️', visited:false },
 ];
 
-/* ============================================================
-   PLAYER STATE
-   ============================================================ */
 const player = {
   x: (MAP_W/2)*TILE, y: (MAP_H/2)*TILE,
   vx:0, vy:0,
-  dir:'down',      // up/down/left/right
+  dir:'down',
   frame:0, frameTimer:0,
   FRAME_DUR: 10,
   FRAMES: 4,
 };
 
-// Camera
 const cam = { x:0, y:0 };
 
-/* ============================================================
-   INPUT STATE
-   ============================================================ */
 const keys = { up:false, down:false, left:false, right:false, interact:false };
-let interactPressed = false;
 
-/* ============================================================
-   GAME STATE
-   ============================================================ */
 let visitedCount = 0;
 let nearPoi = null;
 let popupOpen = false;
@@ -531,9 +555,6 @@ let musicPlaying = false;
 let audioCtx = null;
 let musicNodes = [];
 
-/* ============================================================
-   CANVAS SETUP
-   ============================================================ */
 const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
 
@@ -544,9 +565,6 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-/* ============================================================
-   COLOR PALETTES
-   ============================================================ */
 const COLORS = {
   grass:     ['#4a7c3f','#3d6e34','#52883e','#5a9447'],
   grassDark: '#3d6e34',
@@ -561,23 +579,16 @@ const COLORS = {
   water:     '#5ba5c8',
   waterHigh: '#7dbdd6',
   fence:     '#8b5e3c',
-  sky:       '#87CEEB',
 };
 
-/* ============================================================
-   DRAW TILE
-   ============================================================ */
 function drawTile(x, y, tile, sx, sy) {
   const px = sx + x*TILE;
   const py = sy + y*TILE;
   const T2 = TILE/2;
-
   switch(tile) {
     case T.GRASS: {
-      const c = COLORS.grass[(x+y)%4];
-      ctx.fillStyle = c;
+      ctx.fillStyle = COLORS.grass[(x+y)%4];
       ctx.fillRect(px,py,TILE,TILE);
-      // subtle texture dots
       ctx.fillStyle = 'rgba(0,0,0,0.06)';
       if((x*7+y*3)%5===0) { ctx.fillRect(px+4,py+6,2,2); }
       if((x*3+y*7)%4===0) { ctx.fillRect(px+14,py+16,2,2); }
@@ -594,10 +605,8 @@ function drawTile(x, y, tile, sx, sy) {
     case T.TREE: {
       ctx.fillStyle = COLORS.grass[1];
       ctx.fillRect(px,py,TILE,TILE);
-      // trunk
       ctx.fillStyle = COLORS.treeTrunk;
       ctx.fillRect(px+12,py+20,8,12);
-      // canopy
       ctx.fillStyle = COLORS.tree;
       ctx.beginPath();
       ctx.arc(px+T2, py+14, 14, 0, Math.PI*2);
@@ -658,46 +667,28 @@ function drawTile(x, y, tile, sx, sy) {
   }
 }
 
-/* ============================================================
-   DRAW PLAYER (pixel art style)
-   ============================================================ */
 function drawPlayer(px, py) {
   const f = player.frame;
   const legOff = f%2===0 ? 0 : (f<2 ? -2 : 2);
   const bodyBob = (f===1||f===3) ? 1 : 0;
-
-  // Shadow
   ctx.fillStyle = 'rgba(0,0,0,0.2)';
   ctx.beginPath();
   ctx.ellipse(px+TILE/2, py+TILE-4, 8, 3, 0, 0, Math.PI*2);
   ctx.fill();
-
-  // Legs
   ctx.fillStyle = '#2C1A0E';
-  if(player.dir==='left'||player.dir==='right'||player.dir==='down'||player.dir==='up') {
-    ctx.fillRect(px+9, py+22+bodyBob, 5, 8);
-    ctx.fillRect(px+18, py+22+bodyBob, 5, 8);
-    if(player.vx!==0||player.vy!==0) {
-      ctx.fillRect(px+9+legOff, py+22+bodyBob, 5, 8);
-      ctx.fillRect(px+18-legOff, py+22+bodyBob, 5, 8);
-    }
+  ctx.fillRect(px+9, py+22+bodyBob, 5, 8);
+  ctx.fillRect(px+18, py+22+bodyBob, 5, 8);
+  if(player.vx!==0||player.vy!==0) {
+    ctx.fillRect(px+9+legOff, py+22+bodyBob, 5, 8);
+    ctx.fillRect(px+18-legOff, py+22+bodyBob, 5, 8);
   }
-  // Shoes
   ctx.fillStyle = '#5c3a1e';
   ctx.fillRect(px+8, py+28+bodyBob, 7, 3);
   ctx.fillRect(px+17, py+28+bodyBob, 7, 3);
-
-  // Body
-  ctx.fillStyle = '#e8c5a0';
-  ctx.fillRect(px+8, py+14+bodyBob, 16, 9);
-  // Shirt
   ctx.fillStyle = '#C9A96E';
   ctx.fillRect(px+8, py+14+bodyBob, 16, 8);
-  // Collar
   ctx.fillStyle = '#FFFAF0';
   ctx.fillRect(px+13, py+14+bodyBob, 6, 4);
-
-  // Arms
   ctx.fillStyle = '#e8c5a0';
   if(player.vx!==0||player.vy!==0) {
     ctx.fillRect(px+3, py+14+bodyBob-legOff, 5, 7);
@@ -706,39 +697,27 @@ function drawPlayer(px, py) {
     ctx.fillRect(px+3, py+16+bodyBob, 5, 7);
     ctx.fillRect(px+24, py+16+bodyBob, 5, 7);
   }
-
-  // Head
   ctx.fillStyle = '#f5c5a0';
   ctx.fillRect(px+10, py+4+bodyBob, 12, 10);
-  // Hair
   ctx.fillStyle = '#3d1f10';
   ctx.fillRect(px+10, py+4+bodyBob, 12, 4);
-  // Eyes
   ctx.fillStyle = '#2C1A0E';
   if(player.dir!=='up'){
     ctx.fillRect(px+12, py+10+bodyBob, 2, 2);
     ctx.fillRect(px+18, py+10+bodyBob, 2, 2);
   }
-  // Smile
   if(player.dir==='down'){
     ctx.fillStyle = '#c0725a';
     ctx.fillRect(px+14, py+13+bodyBob, 4, 1);
   }
 }
 
-/* ============================================================
-   DRAW SECOND CHARACTER (bride - near arch)
-   ============================================================ */
 function drawBride(worldX, worldY, cx, cy) {
   const px = worldX - cx + canvas.width/2;
   const py = worldY - cy + canvas.height/2;
   if(px < -50 || px > canvas.width+50 || py < -50 || py > canvas.height+50) return;
-
-  // Shadow
   ctx.fillStyle = 'rgba(0,0,0,0.2)';
   ctx.beginPath(); ctx.ellipse(px+TILE/2, py+TILE-4, 8, 3, 0, 0, Math.PI*2); ctx.fill();
-
-  // Dress / skirt
   ctx.fillStyle = '#FFFAF0';
   ctx.beginPath();
   ctx.moveTo(px+8, py+22);
@@ -746,68 +725,43 @@ function drawBride(worldX, worldY, cx, cy) {
   ctx.lineTo(px+30, py+32);
   ctx.lineTo(px+24, py+22);
   ctx.closePath(); ctx.fill();
-
-  // Dress trim
   ctx.fillStyle = '#F2C4CE';
   ctx.fillRect(px+8, py+22, 16, 2);
-
-  // Body
   ctx.fillStyle = '#FFFAF0';
   ctx.fillRect(px+9, py+14, 14, 9);
-
-  // Veil
   ctx.fillStyle = 'rgba(255,250,240,0.7)';
   ctx.fillRect(px+8, py+4, 16, 14);
-
-  // Head
   ctx.fillStyle = '#f5c5a0';
   ctx.fillRect(px+10, py+6, 12, 10);
-
-  // Hair
   ctx.fillStyle = '#3d1f10';
   ctx.fillRect(px+10, py+6, 12, 3);
-
-  // Flower crown
   ctx.fillStyle = '#F2C4CE';
   ctx.fillRect(px+9, py+5, 14, 3);
   ctx.fillStyle = '#C9A96E';
   ctx.fillRect(px+13, py+4, 6, 2);
-
-  // Eyes
   ctx.fillStyle = '#2C1A0E';
   ctx.fillRect(px+12, py+11, 2, 2);
   ctx.fillRect(px+18, py+11, 2, 2);
-
-  // Bouquet
   ctx.fillStyle = '#e75480';
   ctx.beginPath(); ctx.arc(px+26, py+21, 5, 0, Math.PI*2); ctx.fill();
   ctx.fillStyle = '#f4c2c2';
   ctx.beginPath(); ctx.arc(px+24, py+19, 3, 0, Math.PI*2); ctx.fill();
 }
 
-/* ============================================================
-   DRAW POI MARKER
-   ============================================================ */
 function drawPoi(poi, cx, cy, time) {
   const px = poi.tx*TILE - cx + canvas.width/2;
   const py = poi.ty*TILE - cy + canvas.height/2;
   if(px<-50||px>canvas.width+50||py<-50||py>canvas.height+50) return;
-
-  // Platform
   ctx.fillStyle = poi.visited ? 'rgba(201,169,110,0.25)' : 'rgba(242,196,206,0.3)';
   ctx.strokeStyle = poi.visited ? '#C9A96E' : '#F2C4CE';
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.arc(px+TILE/2, py+TILE/2, TILE*0.6, 0, Math.PI*2);
   ctx.fill(); ctx.stroke();
-
-  // Emoji
   ctx.font = '18px serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(poi.emoji, px+TILE/2, py+TILE/2);
-
-  // Exclamation pulse (when near)
   if(nearPoi && nearPoi.id===poi.id && !popupOpen) {
     const bob = Math.sin(time/300)*4;
     ctx.fillStyle = '#e8d32a';
@@ -820,41 +774,28 @@ function drawPoi(poi, cx, cy, time) {
     ctx.font = 'bold 12px Lato, sans-serif';
     ctx.fillText('!', px+TILE/2, py-14+bob);
   }
-
-  // Visited checkmark
   if(poi.visited) {
     ctx.fillStyle = '#C9A96E';
     ctx.font = 'bold 14px sans-serif';
     ctx.fillText('✓', px+TILE-4, py+4);
   }
-
-  // Label
   ctx.fillStyle = poi.visited ? '#C9A96E' : '#F2C4CE';
   ctx.font = '10px Lato, sans-serif';
   ctx.fillText(poi.label, px+TILE/2, py+TILE+6);
 }
 
-/* ============================================================
-   DRAW DECORATIVE ARCH (near pos 1)
-   ============================================================ */
 function drawArch(worldX, worldY, cx, cy) {
   const px = worldX - cx + canvas.width/2;
   const py = worldY - cy + canvas.height/2;
   if(px < -80 || px > canvas.width+80) return;
-
-  // Posts
   ctx.fillStyle = '#8b5e3c';
   ctx.fillRect(px+4, py+8, 8, 40);
   ctx.fillRect(px+52, py+8, 8, 40);
-
-  // Arch top
   ctx.strokeStyle = '#8b5e3c';
   ctx.lineWidth = 8;
   ctx.beginPath();
   ctx.arc(px+TILE, py+16, 20, Math.PI, 0);
   ctx.stroke();
-
-  // Flowers on arch
   const flowerCols = ['#e75480','#f4c2c2','#FFFAF0','#ffd700'];
   for(let i=0;i<6;i++){
     const ang = Math.PI + i*(Math.PI/5);
@@ -865,17 +806,13 @@ function drawArch(worldX, worldY, cx, cy) {
   }
 }
 
-/* ============================================================
-   RENDER LOOP
-   ============================================================ */
 let lastTime = 0;
 
 function render(time) {
   if(!gameStarted) { requestAnimationFrame(render); return; }
+  if(!lastTime) lastTime = time;
+  lastTime = time;
 
-  const dt = time - lastTime; lastTime = time;
-
-  // Update player animation
   if(player.vx!==0 || player.vy!==0) {
     player.frameTimer += 1;
     if(player.frameTimer >= player.FRAME_DUR) {
@@ -884,23 +821,16 @@ function render(time) {
     }
   } else { player.frame = 0; player.frameTimer = 0; }
 
-  // Move player
   if(!popupOpen) {
     let mx = 0, my = 0;
     if(keys.left) mx -= PLAYER_SPEED;
     if(keys.right) mx += PLAYER_SPEED;
     if(keys.up) my -= PLAYER_SPEED;
     if(keys.down) my += PLAYER_SPEED;
-
-    // Diagonal normalise
     if(mx!==0&&my!==0) { mx*=0.707; my*=0.707; }
-
     if(mx<0) player.dir='left'; else if(mx>0) player.dir='right';
     if(my<0) player.dir='up';   else if(my>0) player.dir='down';
-
     player.vx = mx; player.vy = my;
-
-    // Collision check (simplified - block on TREE, FENCE, WATER tiles)
     const nx = player.x + mx;
     const ny = player.y + my;
     const checkTile = (wx, wy) => {
@@ -909,55 +839,40 @@ function render(time) {
       const t = tileMap[ty][tx];
       return t===T.TREE||t===T.FENCE||t===T.WATER;
     };
-    // Four corners of player hitbox
     const hw = 10, hh = 10;
     const canX = !checkTile(nx+hw, player.y+hh) && !checkTile(nx-hw, player.y+hh) &&
                  !checkTile(nx+hw, player.y-hh) && !checkTile(nx-hw, player.y-hh);
     const canY = !checkTile(player.x+hw, ny+hh) && !checkTile(player.x-hw, ny+hh) &&
                  !checkTile(player.x+hw, ny-hh) && !checkTile(player.x-hw, ny-hh);
-
     if(canX) player.x = Math.max(TILE, Math.min((MAP_W-2)*TILE, nx));
     if(canY) player.y = Math.max(TILE, Math.min((MAP_H-2)*TILE, ny));
   }
 
-  // Camera follow (smooth)
-  const targetCX = player.x, targetCY = player.y;
-  cam.x += (targetCX - cam.x) * 0.12;
-  cam.y += (targetCY - cam.y) * 0.12;
-
-  // Clamp camera
+  cam.x += (player.x - cam.x) * 0.12;
+  cam.y += (player.y - cam.y) * 0.12;
   const halfW = canvas.width/2, halfH = canvas.height/2;
   cam.x = Math.max(halfW, Math.min(MAP_W*TILE - halfW, cam.x));
   cam.y = Math.max(halfH, Math.min(MAP_H*TILE - halfH, cam.y));
 
-  // Draw
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
   const startTX = Math.max(0, Math.floor((cam.x - halfW)/TILE) - 1);
   const endTX   = Math.min(MAP_W-1, Math.ceil((cam.x + halfW)/TILE) + 1);
   const startTY = Math.max(0, Math.floor((cam.y - halfH)/TILE) - 1);
   const endTY   = Math.min(MAP_H-1, Math.ceil((cam.y + halfH)/TILE) + 1);
-
   const offX = Math.round(canvas.width/2  - cam.x);
   const offY = Math.round(canvas.height/2 - cam.y);
 
-  // Draw tiles
   for(let ty=startTY; ty<=endTY; ty++) {
     for(let tx=startTX; tx<=endTX; tx++) {
       drawTile(tx, ty, tileMap[ty][tx], offX, offY);
     }
   }
 
-  // Draw arch near POI 0
   drawArch(pois[0].tx*TILE - TILE, pois[0].ty*TILE - TILE, cam.x, cam.y);
-
-  // Draw bride
   drawBride(pois[0].tx*TILE + TILE*2, pois[0].ty*TILE + TILE, cam.x, cam.y);
-
-  // Draw POIs
   pois.forEach(p => drawPoi(p, cam.x, cam.y, time));
 
-  // Draw player
   const plScreenX = Math.round(player.x - cam.x + canvas.width/2)  - TILE/2;
   const plScreenY = Math.round(player.y - cam.y + canvas.height/2) - TILE/2;
   drawPlayer(plScreenX, plScreenY);
@@ -976,24 +891,19 @@ function render(time) {
     mobileBtn.style.display = 'flex';
   } else {
     prompt.style.display = 'none';
-    mobileBtn.style.display = nearPoi && !popupOpen ? 'flex' : 'none';
+    mobileBtn.style.display = 'none';
   }
 
-  // Handle interact key
+  // Handle interact key (E or Enter)
   if(keys.interact && !popupOpen && nearPoi) {
     keys.interact = false;
     openPoi(nearPoi);
   }
 
-  // Countdown
   updateCountdown();
-
   requestAnimationFrame(render);
 }
 
-/* ============================================================
-   COUNTDOWN
-   ============================================================ */
 function updateCountdown() {
   const now = new Date();
   const diff = WEDDING_DATE - now;
@@ -1007,13 +917,9 @@ function updateCountdown() {
 }
 setInterval(updateCountdown, 1000);
 
-/* ============================================================
-   POPUP CONTENT
-   ============================================================ */
 function openPoi(poi) {
   if(popupOpen) return;
   popupOpen = true;
-
   if(!poi.visited) {
     poi.visited = true;
     visitedCount++;
@@ -1022,19 +928,10 @@ function openPoi(poi) {
       setTimeout(showCelebration, 800);
     }
   }
-
-  const titleEl = document.getElementById('popup-title');
-  const subEl = document.getElementById('popup-subtitle');
-  const bodyEl = document.getElementById('popup-body');
-
-  titleEl.textContent = poi.label;
-  subEl.textContent = poi.emoji + ' ' + ['Pos 1','Pos 2','Pos 3','Pos 4','Pos 5'][poi.id];
-
-  bodyEl.innerHTML = getPoiContent(poi.id);
-
-  // Bind RSVP if needed
+  document.getElementById('popup-title').textContent = poi.label;
+  document.getElementById('popup-subtitle').textContent = poi.emoji + ' ' + ['Pos 1','Pos 2','Pos 3','Pos 4','Pos 5'][poi.id];
+  document.getElementById('popup-body').innerHTML = getPoiContent(poi.id);
   if(poi.id===4) bindRsvp();
-
   document.getElementById('popup-overlay').classList.add('active');
 }
 
@@ -1058,7 +955,6 @@ function getPoiContent(id) {
         <h3>✨ Kini</h3>
         <p>Dengan restu keluarga dan ridho Allah, kami siap melangkah menuju babak baru dalam ikatan yang suci. Terima kasih telah menjadi bagian dari perjalanan kami.</p>
       </div>`;
-
     case 1: return `
       <div class="info-card">
         <p class="label">📅 Tanggal</p>
@@ -1070,7 +966,6 @@ function getPoiContent(id) {
       </div>
       <p>Kami memohon doa restu dan kehadiran Bapak/Ibu/Saudara/i dalam prosesi ijab kabul yang sakral ini.</p>
       <a href="https://maps.google.com/?q=Masjid+Agung+Al-Falah+Yogyakarta" target="_blank" class="maps-btn">🗺️ Buka Google Maps</a>`;
-
     case 2: return `
       <div class="info-card">
         <p class="label">📅 Tanggal</p>
@@ -1085,28 +980,14 @@ function getPoiContent(id) {
         <p>Hidangan spesial nusantara, dekorasi taman romantis, pertunjukan gamelan live, dan sesi foto bersama.</p>
       </div>
       <a href="https://maps.google.com/?q=Pendopo+Agung+Yogyakarta" target="_blank" class="maps-btn">🗺️ Buka Google Maps</a>`;
-
     case 3: return `
       <p style="margin-bottom:14px">Beberapa momen indah dalam perjalanan kami bersama. 📸</p>
       <div class="gallery-grid">
-        <div class="gallery-placeholder">
-          <div class="emoji">🌅</div>
-          <div class="caption">First Meeting<br>Jogja 2019</div>
-        </div>
-        <div class="gallery-placeholder">
-          <div class="emoji">☕</div>
-          <div class="caption">Kafe Favorit<br>Kami</div>
-        </div>
-        <div class="gallery-placeholder">
-          <div class="emoji">🏖️</div>
-          <div class="caption">Lamaran<br>Parangtritis</div>
-        </div>
-        <div class="gallery-placeholder">
-          <div class="emoji">💍</div>
-          <div class="caption">Foto Prewedding<br>2025</div>
-        </div>
+        <div class="gallery-placeholder"><div class="emoji">🌅</div><div class="caption">First Meeting<br>Jogja 2019</div></div>
+        <div class="gallery-placeholder"><div class="emoji">☕</div><div class="caption">Kafe Favorit<br>Kami</div></div>
+        <div class="gallery-placeholder"><div class="emoji">🏖️</div><div class="caption">Lamaran<br>Parangtritis</div></div>
+        <div class="gallery-placeholder"><div class="emoji">💍</div><div class="caption">Foto Prewedding<br>2025</div></div>
       </div>`;
-
     case 4: return `
       <p style="margin-bottom:14px">Kehadiran dan doa restu Anda adalah kebahagiaan terbesar bagi kami. 🙏</p>
       <div id="rsvp-wrap">
@@ -1132,9 +1013,6 @@ function getPoiContent(id) {
   return '';
 }
 
-/* ============================================================
-   RSVP LOGIC
-   ============================================================ */
 function bindRsvp() {
   renderWishes();
   document.getElementById('rsvp-submit-btn').addEventListener('click', () => {
@@ -1165,16 +1043,12 @@ function escHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-/* ============================================================
-   CELEBRATION & CONFETTI
-   ============================================================ */
 function showCelebration() {
   celebrationShown = true;
   const cc = document.getElementById('confetti-canvas');
   cc.width = window.innerWidth; cc.height = window.innerHeight;
   cc.style.display = 'block';
   document.getElementById('celebration-msg').style.display = 'block';
-
   const ccx = cc.getContext('2d');
   const particles = [];
   const colors = ['#C9A96E','#F2C4CE','#FFFAF0','#e75480','#ffd700','#a8823c'];
@@ -1205,9 +1079,6 @@ function showCelebration() {
   animConf();
 }
 
-/* ============================================================
-   FALLING PETALS
-   ============================================================ */
 function spawnPetals() {
   const petals = ['🌸','🌺','🌷','🌹','✿','❀'];
   for(let i=0;i<12;i++) {
@@ -1226,9 +1097,6 @@ function spawnPetals() {
 setInterval(spawnPetals, 4000);
 spawnPetals();
 
-/* ============================================================
-   MUSIC (Web Audio API ambient)
-   ============================================================ */
 function createAmbientMusic() {
   if(audioCtx) return;
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1236,8 +1104,6 @@ function createAmbientMusic() {
   masterGain.gain.setValueAtTime(0.06, audioCtx.currentTime);
   masterGain.connect(audioCtx.destination);
   musicNodes = [masterGain];
-
-  // Simple chord progression (C major / Am loop)
   const notes = [261.63, 329.63, 392.00, 523.25, 440.00, 349.23, 392.00, 523.25];
   let noteIdx = 0;
   function playNote() {
@@ -1254,17 +1120,14 @@ function createAmbientMusic() {
     noteIdx++;
     setTimeout(playNote, 1400);
   }
-
-  // Pad drone
   const pad = audioCtx.createOscillator();
   const padGain = audioCtx.createGain();
   pad.type = 'sine';
-  pad.frequency.setValueAtTime(130.81, audioCtx.currentTime); // C3
+  pad.frequency.setValueAtTime(130.81, audioCtx.currentTime);
   padGain.gain.setValueAtTime(0.03, audioCtx.currentTime);
   pad.connect(padGain); padGain.connect(masterGain);
   pad.start();
   musicNodes.push(pad, padGain);
-
   playNote();
 }
 
@@ -1292,7 +1155,14 @@ document.addEventListener('keydown', e => {
     case 'ArrowDown':  case 's': case 'S': keys.down=true; e.preventDefault(); break;
     case 'ArrowLeft':  case 'a': case 'A': keys.left=true; e.preventDefault(); break;
     case 'ArrowRight': case 'd': case 'D': keys.right=true; e.preventDefault(); break;
-    case 'e': case 'E': keys.interact=true; break;
+    case 'e': case 'E':
+    case 'Enter':  // ← ENTER also triggers interact
+      if(!popupOpen && nearPoi) {
+        keys.interact = true;
+      } else if(popupOpen && e.key==='Enter') {
+        // don't close on Enter (user might be typing in RSVP)
+      }
+      break;
     case 'Escape': if(popupOpen) closePopup(); break;
   }
 });
@@ -1305,34 +1175,43 @@ document.addEventListener('keyup', e => {
   }
 });
 
-// D-pad buttons
+// D-pad — solid touch/mouse support
 function setupDpad(id, key) {
   const btn = document.getElementById(id);
   btn.addEventListener('touchstart', e => { e.preventDefault(); keys[key]=true; btn.classList.add('pressed'); }, {passive:false});
   btn.addEventListener('touchend',   e => { e.preventDefault(); keys[key]=false; btn.classList.remove('pressed'); }, {passive:false});
-  btn.addEventListener('mousedown',  () => { keys[key]=true; });
-  btn.addEventListener('mouseup',    () => { keys[key]=false; });
-  btn.addEventListener('mouseleave', () => { keys[key]=false; });
+  btn.addEventListener('touchcancel',e => { keys[key]=false; btn.classList.remove('pressed'); }, {passive:false});
+  btn.addEventListener('mousedown',  e => { e.preventDefault(); keys[key]=true; btn.classList.add('pressed'); });
+  btn.addEventListener('mouseup',    e => { keys[key]=false; btn.classList.remove('pressed'); });
+  btn.addEventListener('mouseleave', e => { keys[key]=false; btn.classList.remove('pressed'); });
 }
-setupDpad('btn-up','up'); setupDpad('btn-down','down');
-setupDpad('btn-left','left'); setupDpad('btn-right','right');
+setupDpad('btn-up','up');
+setupDpad('btn-down','down');
+setupDpad('btn-left','left');
+setupDpad('btn-right','right');
 
+// Tap interact button
+document.getElementById('interact-btn-mobile').addEventListener('touchstart', e => {
+  e.preventDefault();
+  if(nearPoi && !popupOpen) openPoi(nearPoi);
+}, {passive:false});
 document.getElementById('interact-btn-mobile').addEventListener('click', () => {
   if(nearPoi && !popupOpen) openPoi(nearPoi);
 });
 
-// Popup close
+// Canvas tap — open POI when tapping on or very near it on mobile
+canvas.addEventListener('click', e => {
+  if(!gameStarted || popupOpen) return;
+  if(nearPoi) openPoi(nearPoi);
+});
+
 document.getElementById('popup-close').addEventListener('click', closePopup);
 document.getElementById('popup-overlay').addEventListener('click', e => {
   if(e.target===document.getElementById('popup-overlay')) closePopup();
 });
-
-// Celebration close
 document.getElementById('close-cel').addEventListener('click', () => {
   document.getElementById('celebration-msg').style.display='none';
 });
-
-// Music button
 document.getElementById('music-btn').addEventListener('click', toggleMusic);
 
 /* ============================================================
@@ -1341,32 +1220,22 @@ document.getElementById('music-btn').addEventListener('click', toggleMusic);
 document.getElementById('start-btn').addEventListener('click', () => {
   const intro = document.getElementById('intro-screen');
   const wrapper = document.getElementById('game-wrapper');
-
-  // Init camera at center of map
   cam.x = player.x;
   cam.y = player.y;
-
   intro.classList.add('fade-out');
   setTimeout(() => {
     intro.style.display = 'none';
     wrapper.classList.add('visible');
     gameStarted = true;
+    lastTime = 0;
     requestAnimationFrame(render);
   }, 800);
-
-  // Auto-start music on interact
   setTimeout(() => {
     musicPlaying = true;
     createAmbientMusic();
     document.getElementById('music-btn').textContent = '🔊';
   }, 900);
 });
-
-// Detect mobile and adjust
-const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent) || window.innerWidth < 768;
-if(!isMobile) {
-  // On desktop, hide mobile controls area but keep D-pad visible for usability
-}
 </script>
 </body>
 </html>
